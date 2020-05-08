@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1ed163fe-7ab4-45df-b2a5-14e1f6ef649e" name="Default" comment="" />
+    <list default="true" id="1ed163fe-7ab4-45df-b2a5-14e1f6ef649e" name="Default" comment="dasd">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -180,14 +182,30 @@
       <workItem from="1574659015685" duration="21738000" />
       <workItem from="1574733211634" duration="1400000" />
       <workItem from="1588905928617" duration="92000" />
-      <workItem from="1588906321824" duration="885000" />
+      <workItem from="1588906321824" duration="1254000" />
     </task>
+    <task id="LOCAL-00001" summary="dasd">
+      <created>1588907512438</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1588907512438</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="dasd" />
+    <option name="LAST_COMMIT_MESSAGE" value="dasd" />
+  </component>
   <component name="WindowStateProjectService">
+    <state x="558" y="95" key="CommitChangelistDialog2" timestamp="1588907524282">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="558" y="95" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1588907524282" />
     <state x="852" y="294" key="FileChooserDialogImpl" timestamp="1588906016358">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
