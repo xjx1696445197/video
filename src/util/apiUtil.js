@@ -11,7 +11,7 @@ var api_rootimg = 'http://chmcserver.chmc.top';//正式调试
 var inner_img_root = api_rootimg + "/resource";
 //上传图片资源路径
 var upload_img_root = api_rootimg ;
-// var upload_img_root= api_root+"/images/b2b2c_ssm";//本地调试
+// var upload_img_root= api_root+"/images/b2b2c_ssm";//本地调试1
 
 var urlUtil = urlUtil || {};
 urlUtil.uploadImgRoot = upload_img_root;
