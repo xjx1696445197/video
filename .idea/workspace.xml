@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="1ed163fe-7ab4-45df-b2a5-14e1f6ef649e" name="Default" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="CSS File" />
+        <option value="JavaScript File" />
+        <option value="Vue Single File Component" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>f44</find>
+      <find>f22</find>
+      <find>riliList</find>
+      <find>mar_b5</find>
+      <find>buy_btn</find>
+      <find>list</find>
+      <find>tabColor</find>
+      <find>ShopArticleList</find>
+      <find>ShopSpecialActivity</find>
+      <find>shop_order</find>
+      <find>shop_order_wallet</find>
+      <find>shop_orderBottom</find>
+      <find>back</find>
+      <find>swiper-slide</find>
+      <find>carousel_item</find>
+      <find>ShopSearch</find>
+      <find>toDetail</find>
+      <find>search_top</find>
+      <find>input</find>
+      <find>mar_b10</find>
+      <find>button-box</find>
+      <find>pad_b10</find>
+      <find>queryProduct</find>
+      <find>go</find>
+      <find>panicBuy</find>
+      <find>in_search</find>
+      <find>searchBtnkey</find>
+      <find>oprate_btn1</find>
+      <find>oprate_btn1</find>
+      <find>wrem8</find>
+    </findStrings>
+    <replaceStrings>
+      <replace />
+      <replace>wallet_</replace>
+      <replace>shop_item_icon</replace>
+    </replaceStrings>
+    <dirStrings>
+      <dir>E:\hale-vue0.1.5</dir>
+    </dirStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1bbftI9HVkjzSrX7k3cD0QwbnS8" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="SearchEverywhereHistoryKey" value="login&#9;FILE&#9;file://E:/hale-vue2.0.5/src/pages/Login.vue&#10;share&#9;FILE&#9;file://E:/hale-vues/hale-vue2.0.1/src/pages/Share.vue&#10;my&#9;FILE&#9;file://E:/hale-vue0.1.5/src/pages/My.vue&#10;gro&#9;FILE&#9;file://E:/hale-vue0.1.5/src/pages/Group.vue&#10;curr&#9;FILE&#9;file://E:/hale-vue0.1.5/src/pages/CurrencyExchange.vue&#10;R&#9;FILE&#9;file://E:/hale-vue0.1.5/src/pages/Register.vue&#10;fill&#9;FILE&#9;file://E:/hale-vue0.1.5/src/pages/FillMnemonicWord.vue&#10;for&#9;FILE&#9;file://E:/hale-vue0.1.5/src/pages/ForgetPassword.vue&#10;pro&#9;FILE&#9;file://E:/hale-vue0.1.5/src/pages/Product.vue&#10;per&#9;FILE&#9;file://E:/hale-vue0.1.5/src/pages/PersonalCenter.vue&#10;asset&#9;FILE&#9;file://E:/hale-vue0.1.5/src/pages/Asset.vue&#10;set&#9;FILE&#9;file://E:/hale-vue0.1.5/src/pages/SetPassword.vue&#10;forge&#9;FILE&#9;file://E:/hale-vue0.1.5/src/pages/ForgetPassword.vue&#10;gr&#9;FILE&#9;file://E:/hale-vue0.1.5/src/pages/Group.vue&#10;fillMnemonicWord&#9;FILE&#9;file://E:/hale-vue0.1.5/src/pages/FillMnemonicWord.vue&#10;exportMnemonicWord&#9;FILE&#9;file://E:/hale-vue0.1.5/src/pages/ExportMnemonicWord.vue&#10;ass&#9;FILE&#9;file://E:/hale-vue0.1.5/src/pages/Asset.vue&#10;ca&#9;FILE&#9;file://E:/hale-vue0.1.5/src/pages/CalculatePower.vue&#10;lock&#9;FILE&#9;file://E:/hale-vue0.1.5/src/pages/LockedPosition.vue&#10;mod&#9;FILE&#9;file://E:/hale-vue0.1.5/src/pages/ModifyPassword.vue&#10;wa&#9;FILE&#9;file://E:/hale-vue0.1.5/src/pages/WalletDetail.vue&#10;pr&#9;FILE&#9;file://E:/hale-vue0.1.5/src/pages/PrivacyAgreement.vue&#10;user&#9;FILE&#9;file://E:/hale-vue0.1.5/src/pages/UserAgreement.vue&#10;grou&#9;FILE&#9;file://E:/hale-vue0.1.5/src/pages/Group.vue&#10;notice&#9;FILE&#9;file://E:/hale-vue0.1.5/src/pages/Notice.vue&#10;l&#9;FILE&#9;file://E:/hale-vue0.1.5/src/pages/LockedPosition.vue&#10;cu&#9;FILE&#9;file://E:/hale-vue0.1.5/src/pages/CurrencyExchange.vue&#10;currencyExchange&#9;null&#9;null" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="editor.config.ad.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="ts.external.directory.path" value="E:\写代码工具\WebStorm 2018.3.5\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\vue项目\hale-vue0.0.5\src\static\images" />
+      <recent name="E:\vue例子\hale-vue0.0.1\src\example" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\vue例子\hale-vue0.0.6\src\static\js" />
+      <recent name="E:\vue例子\hale-vue0.0.6\src\plugins" />
+      <recent name="E:\vue例子\hale-vue0.0.6\src\plugins\layer" />
+      <recent name="E:\vue项目\hale-vue0.0.5\src\static\images" />
+    </key>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1ed163fe-7ab4-45df-b2a5-14e1f6ef649e" name="Default" comment="" />
+      <created>1567237259604</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1567237259604</updated>
+      <workItem from="1567237264544" duration="47506000" />
+      <workItem from="1567387465880" duration="31404000" />
+      <workItem from="1567473211223" duration="28783000" />
+      <workItem from="1567524737809" duration="8683000" />
+      <workItem from="1567593774159" duration="1470000" />
+      <workItem from="1567600510750" duration="8158000" />
+      <workItem from="1567645626460" duration="30764000" />
+      <workItem from="1567691283267" duration="9542000" />
+      <workItem from="1568082404221" duration="16472000" />
+      <workItem from="1568173515073" duration="13973000" />
+      <workItem from="1568251420095" duration="19596000" />
+      <workItem from="1568286657607" duration="5198000" />
+      <workItem from="1568638827929" duration="61000" />
+      <workItem from="1568638909286" duration="9053000" />
+      <workItem from="1568682960794" duration="26537000" />
+      <workItem from="1568768296453" duration="2318000" />
+      <workItem from="1568773293963" duration="23097000" />
+      <workItem from="1568855136353" duration="1332000" />
+      <workItem from="1568860183083" duration="11812000" />
+      <workItem from="1568968182721" duration="12148000" />
+      <workItem from="1569124367837" duration="3000" />
+      <workItem from="1569124865885" duration="25815000" />
+      <workItem from="1570248251651" duration="17377000" />
+      <workItem from="1570278417316" duration="59466000" />
+      <workItem from="1570499982477" duration="7236000" />
+      <workItem from="1570600907241" duration="8823000" />
+      <workItem from="1571238716083" duration="8592000" />
+      <workItem from="1571279411351" duration="21313000" />
+      <workItem from="1571363326949" duration="24119000" />
+      <workItem from="1571467470125" duration="12864000" />
+      <workItem from="1571573462068" duration="8140000" />
+      <workItem from="1571621716621" duration="4520000" />
+      <workItem from="1571648428904" duration="1086000" />
+      <workItem from="1571709422126" duration="2606000" />
+      <workItem from="1571714081393" duration="17348000" />
+      <workItem from="1571745139185" duration="3194000" />
+      <workItem from="1571800475563" duration="2177000" />
+      <workItem from="1571818714085" duration="55000" />
+      <workItem from="1571818954185" duration="14000" />
+      <workItem from="1571819090556" duration="2237000" />
+      <workItem from="1571893813854" duration="53000" />
+      <workItem from="1571894730447" duration="2577000" />
+      <workItem from="1571906193892" duration="671000" />
+      <workItem from="1571907227963" duration="1345000" />
+      <workItem from="1572328468298" duration="1809000" />
+      <workItem from="1572575495655" duration="1527000" />
+      <workItem from="1572579414461" duration="1521000" />
+      <workItem from="1572588188024" duration="320000" />
+      <workItem from="1572592382559" duration="1662000" />
+      <workItem from="1572595111046" duration="245000" />
+      <workItem from="1572847251328" duration="13802000" />
+      <workItem from="1572919194591" duration="18564000" />
+      <workItem from="1573007327838" duration="18075000" />
+      <workItem from="1573090886468" duration="16086000" />
+      <workItem from="1573112825135" duration="11999000" />
+      <workItem from="1573177754598" duration="3026000" />
+      <workItem from="1573182423658" duration="7125000" />
+      <workItem from="1573523253618" duration="12796000" />
+      <workItem from="1573608521308" duration="11759000" />
+      <workItem from="1573634894504" duration="6343000" />
+      <workItem from="1573654310040" duration="5088000" />
+      <workItem from="1573695891769" duration="5938000" />
+      <workItem from="1573704213128" duration="1552000" />
+      <workItem from="1573707997918" duration="11705000" />
+      <workItem from="1573782712410" duration="25793000" />
+      <workItem from="1573826215928" duration="5151000" />
+      <workItem from="1573891861040" duration="9089000" />
+      <workItem from="1574041664299" duration="12618000" />
+      <workItem from="1574131575956" duration="7544000" />
+      <workItem from="1574215266894" duration="18297000" />
+      <workItem from="1574302174092" duration="5637000" />
+      <workItem from="1574315402981" duration="11636000" />
+      <workItem from="1574386526099" duration="23830000" />
+      <workItem from="1574646669772" duration="3637000" />
+      <workItem from="1574659015685" duration="21738000" />
+      <workItem from="1574733211634" duration="1400000" />
+      <workItem from="1588905928617" duration="92000" />
+      <workItem from="1588906321824" duration="885000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="852" y="294" key="FileChooserDialogImpl" timestamp="1588906016358">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="852" y="294" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1588906016358" />
+    <state x="461" y="151" key="SettingsEditor" timestamp="1588906758280">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="461" y="151" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1588906758280" />
+    <state x="753" y="432" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1588907206079">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="753" y="432" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1588907206079" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/pages/ForgetPassword.vue</url>
+          <line>119</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/pages/ShopMy.vue</url>
+          <line>36</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

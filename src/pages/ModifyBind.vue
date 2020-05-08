@@ -1,0 +1,429 @@
+<template>
+    <div class="page">
+        <div class="HEADER">
+            <div class="HEADER_BACK" @click="this.$back"></div>
+            <p class="HEADER_TITLE">{{title}}</p>
+        </div>
+        <div class="wrapper">
+            <div class="content_wrapper">
+                <p class="content_txt1">{{mobilePhone ? phoneTip1: emailTip1}}</p>
+                <p class="content_txt1">{{mobilePhone ? phoneTip2: emailTip2}}{{number}}</p>
+
+                <div class="content">
+                    <div class="FORM" style="padding-top:0.18rem; ">
+                        <div
+                                class="INPUT"
+                                v-focus
+                                v-if="mobilePhone"
+                        >
+                            <input
+                                    type="text"
+                                    :placeholder="$t('validate.validate_newPhone')"
+                                    v-model="formData.tel"
+                                    v-validate:captcha="validateOtions.tel"
+                            >
+                        </div>
+                        <div
+                                class="INPUT"
+                                v-focus
+                                v-if="email"
+                        >
+                            <input
+                                    type="text"
+                                    :placeholder="$t('validate.validate_newEmail')"
+                                    v-model="formData.email"
+                                    v-validate:captcha="validateOtions.email"
+                            >
+                        </div>
+
+
+                        <div
+                                class="INPUT"
+                                v-focus
+                                v-if="mobilePhone"
+                        >
+                            <input
+                                    type="text"
+                                    :placeholder="$t('findPassword.findPassword_phoneCode')"
+                                    v-model="formData.captcha"
+                                    v-validate:captcha="validateOtions.captcha"
+                            >
+                            <div
+                                    class="sendCaptcha radius-half BUTTON_BG"
+                                    @click="sendCaptchaTel"
+                            >{{captchaTips}}</div>
+                        </div>
+                        <div
+                                class="INPUT"
+                                v-focus
+                                v-else
+                        >
+                            <input
+                                    type="text"
+                                    :placeholder="$t('findPassword.findPassword_mailboxCode')"
+                                    v-model="formData.captcha"
+                                    v-validate:captcha="validateOtions.captcha"
+                            >
+                            <div
+                                    class="sendCaptcha radius-half BUTTON_BG"
+                                    @click="sendCaptchaEmail"
+                            >{{captchaTips}}</div>
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div
+                            class="modifyPwd_btn LONGBTN"
+                            @click="toValidate"
+                    >{{$t('layerdate.layerdate_btnOk')}}</div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <nlayer
+                :maskCancel="false"
+                maskBackgroundColor="rgba(0,0,0,0)"
+                :autoClose="1200"
+                :visible="tipsVisible"
+                @close="tipsClosed"
+                class="NTOAST ANIMATITE_SCALE_TO_BIG"
+        >
+            <div class='TOAST' v-text="tips"></div>
+        </nlayer>
+    </div>
+</template>
+
+<script>
+    // 验证格式及错误信息
+
+    import { mapGetters, mapActions, mapMutations } from 'vuex'
+    import Nlayer from '@/components/Nlayer'
+
+    const TIME = 60
+
+
+    export default {
+        name: "ModifyBind",
+        data(){
+            return {
+                formData: {
+                    tel: '',
+                    email: '',
+                    captcha: ''
+                },
+                tips: '',
+                tipsVisible: false,
+                sended: false,
+                captchaToken: '',
+                time: TIME
+            }
+        },
+        components: {
+            Nlayer
+        },
+        computed: {
+            userinfo(){
+                return this.getUserinfo()
+            },
+            userId(){
+                return this.userinfo.userId
+            },
+            number(){
+                return this.$route.query.number
+            },
+            target(){
+                return this.$route.query.name
+            },
+
+            mobilePhone(){
+                return this.target === 'modifyBindTel' ? this.number : false
+            },
+            email(){
+                return this.target === 'modifyBindTel' ? false : this.number
+            },
+            title(){
+                if( this.target === 'modifyBindTel' ){
+                    return this.$t('validate.validate_updatePhone')
+                } else if( this.target === 'modifyBindEmail' ){
+                    return this.$t('validate.validate_updateEmail')
+                }
+            },
+            captchaTips(){
+                if( this.sended ){
+                    return this.time >= 10 ? this.time+this.$t('register.register_seconds')+this.$t('register.register_again') : '0'+this.time +this.$t('register.register_seconds')+this.$t('register.register_again')
+                } else {
+                    return this.$t('register.register_getCode')
+                }
+            },
+            validateOtions(){
+                // 验证格式及错误信息
+                const res = {
+                    tel: {
+                        rules:{
+                            required: true,
+                            phone: true
+                        },
+                        msg:{
+                            required: this.$t('validate.validate_phone'),
+                            phone: this.$t('validate.validate_phoneFormat')
+                        }
+                    },
+                    email: {
+                        rules:{
+                            required: true,
+                            email: true
+                        },
+                        msg:{
+                            required: this.$t('validate.validate_email'),
+                            email: this.$t('validate.validate_emailFormat')
+                        }
+                    },
+                    captcha: {
+                        rules:{
+                            required: true
+                        },
+                        msg:{
+                            required: this.$t('validate.validate_code')
+                        }
+                    },
+
+                }
+
+                return res
+            },
+            phoneTip1(){
+                return this.$t('validate.validate_updateP')
+            },
+            emailTip1(){
+                return this.$t('validate.validate_updateE')
+            },
+            phoneTip2(){
+                return this.$t('validate.validate_curPhone')
+            },
+            emailTip2(){
+                return this.$t('validate.validate_curEmail')
+            }
+        },
+        methods: {
+            ...mapMutations(['SET_ROUTEACTION']),
+            ...mapActions(['removeUserinfo','setUserinfo']),
+            ...mapGetters(['getUserinfo']),
+            // 重置历史记录
+            resetHistory(){
+                const step = window.history.length - 3
+
+                this.$router.go(-step)
+                setTimeout(() => {
+                    this.SET_ROUTEACTION('')
+                    this.$router.replace({
+                        path: '/login'
+                    })
+                }, 100)
+            },
+            // 去验证格式
+            toValidate(){
+                const pass = this.$validator.checkAll()
+
+                const {
+                    tel,
+                    email
+                } = this.formData
+
+                if( !pass ) {
+                    // 没通过验证
+                    const errors = this.$validator.errors.errors
+                    const errorMsg = errors[0].msg
+                    this.showTips(errorMsg)
+                    return
+                }
+
+
+                this.submit()
+            },
+            // 提交信息
+            submit(){
+                let params = {
+                    userId: this.userId,
+                    messageValidateCode: this.formData.captcha
+                }
+
+                if( this.mobilePhone ){
+                    params = {
+                        ...params,
+                        type: 1,
+                        mobilePhone: this.formData.tel
+                    }
+                } else {
+                    params = {
+                        ...params,
+                        type: 2,
+                        email: this.formData.email
+                    }
+                }
+
+                this.$http.post('js/users/bindingEmailOrPhone', params, {
+                    headers: {
+                        'tmp_token': this.captchaToken
+                    }
+                }).then((res) => {
+                    console.log(res)
+                    this.showTips(res.message)
+                    if( res.success ){
+                        // 设置最新的用户信息
+                        if( !this.mobilePhone ){
+                            this.setUserinfo({
+                                ...this.userinfo,
+                                email: this.formData.email
+                            })
+                        } else {
+                            this.setUserinfo({
+                                ...this.userinfo,
+                                mobilePhone: this.formData.tel
+                            })
+
+                        }
+
+                        setTimeout(() => {
+                            this.$back()
+                        }, 1200)
+                    }
+                })
+            },
+            // 手机发送验证码
+            sendCaptchaTel(){
+                if(this.formData.tel == ''){
+                    this.showTips(this.$t('validate.validate_phone'))
+                    return
+                }else{
+                    if( !this.sended ){
+                        this.$http.get('js/usersLogin/phoneNumberCode', {
+                            phoneNumber: this.formData.tel,
+                            type: 2,
+                            __HEADERSAUTH: true
+                        }).then((res) => {
+                            this.showTips(res.data.message)
+                            this.captchaToken = res.headers.tmp_token
+
+                            this.setTimer()
+                        })
+                    }
+
+                    this.sended = true
+                }
+
+            },
+            // 邮箱发送验证码
+            sendCaptchaEmail(){
+                if(this.formData.email == ''){
+                    this.showTips(this.$t('validate.validate_email'))
+                    return
+                }else{
+                    if( !this.sended ){
+                        this.$http.get('js/usersLogin/emailCode', {
+                            email: this.formData.email,
+                            type: 2,
+                            __HEADERSAUTH: true
+                        }).then((res) => {
+                            this.showTips(res.data.message)
+                            this.captchaToken = res.headers.tmp_token
+
+                            this.setTimer()
+                        })
+                    }
+
+
+                    this.sended = true
+                }
+
+            },
+            // 倒计时
+            setTimer(){
+                const timer = setTimeout(() => {
+                    if( this.time <= 0 ){
+                        clearTimeout(timer)
+                        this.sended = false
+                        this.time = TIME
+                        return
+                    }
+                    this.time -= 1
+                    this.setTimer()
+                }, 1000)
+            },
+            // 打开消息提示
+            showTips(msg){
+                this.tips = msg
+                this.tipsVisible = true
+            },
+            // 监听消息提示关闭
+            tipsClosed(){
+                this.msg = ''
+                this.tipsVisible = false
+            }
+        }
+    }
+</script>
+
+<style scoped>
+    .content_wrapper{
+        background: #fafafa;
+        padding-top: 0.24rem;
+    }
+    .content{
+        background: #fff;
+        padding: 0 1rem;
+        margin-top: 0.24rem;
+    }
+    .content_txt1{
+        font-size: 0.26rem;
+        color: #666;
+        line-height: 0.45rem;
+        padding: 0 1.2rem;
+    }
+    .modifyPwd_label{
+        font-size: .26rem;
+        color: #333;
+        line-height: .7rem;
+        width: 1.2rem;
+    }
+    .modifyPwd_sub{
+        display: flex;
+        justify-content: space-between;
+        padding: 0.15rem 0;
+        margin-top: 0.18rem;
+    }
+    .modifyPwd_txt1{
+        font-size: .26rem;
+        color: #aaa;
+        line-height: 0.4rem;
+        flex: 1;
+    }
+    .modifyPwd_txt2{
+        font-size: .26rem;
+        color: #e4811d;
+        line-height: 0.4rem;
+        width: 1.5rem;
+        text-align: right;
+    }
+    .modifyPwd_btn{
+        margin-top: 0.9rem;
+        font-size: .3rem;
+        color: #fff;
+        width: 5.5rem;
+        line-height: .7rem;
+    }
+    .sendCaptcha{
+        width: auto;
+        height:0.5rem;
+        box-sizing: border-box;
+        padding: 0 0.2rem;
+        font-size: 0.22rem;
+        color: #fff;
+        line-height: 0.5rem;
+        text-align: center;
+    }
+</style>

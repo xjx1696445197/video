@@ -1,0 +1,196 @@
+/*  动画系列 由下往上
+   nlayerclass="ANIMATITE_BOTTOM_TO_TOP"
+   nlayercontentclass="nlayercontent"
+   nshowclass="show"
+*/
+
+.ANIMATITE_BOTTOM_TO_TOP .nlayer_content{
+    top: auto;
+    transform: translate3d(0, 100%, 0);
+}
+.ANIMATITE_BOTTOM_TO_TOP.show .nlayer_content{
+    transform: translate3d(0, 0, 0);
+}
+
+/*  动画系列 由上往下
+    nlayerclass="ANIMATITE_TOP_TO_BOTTOM"
+    nlayercontentclass="nlayercontent"
+    nshowclass="show"
+*/
+
+.ANIMATITE_TOP_TO_BOTTOM .nlayer_content{
+    bottom: auto;
+    transform: translate3d(0, -100%, 0);
+}
+.ANIMATITE_TOP_TO_BOTTOM.show .nlayer_content{
+    transform: translate3d(0, 0, 0);
+}
+
+/*  动画系列 由上往下 small
+    nlayerclass="ANIMATITE_TOP_TO_BOTTOM"
+    nlayercontentclass="nlayercontent"
+    nshowclass="show"
+*/
+
+.ANIMATITE_TOP_TO_BOTTOM_SMALL .nlayer_content{
+    transform: translate3d(0, -30%, 0);
+}
+.ANIMATITE_TOP_TO_BOTTOM_SMALL.show .nlayer_content{
+    transform: translate3d(0, 0, 0);
+}
+
+/*  动画系列 由左往右
+    nlayerclass="ANIMATITE_LEFT_TOP_RIGHT"
+    nlayercontentclass="nlayercontent"
+    nshowclass="show"
+*/
+
+.ANIMATITE_LEFT_TO_RIGHT .nlayer_content{
+    right: auto;
+    transform: translate3d(-100%, 0, 0) ;
+}
+.ANIMATITE_LEFT_TO_RIGHT.show .nlayer_content{
+    transform: translate3d(0, 0, 0);
+
+}
+
+/*  动画系列 由右往左
+    nlayerclass="ANIMATITE_RIGHT_TOP_LEFT"
+    nlayercontentclass="nlayercontent"
+    nshowclass="show"
+*/
+
+.ANIMATITE_RIGHT_TOP_LEFT .nlayer_content{
+
+    left: auto;
+    transform: translate3d(100%, 0, 0);
+}
+.ANIMATITE_RIGHT_TOP_LEFT.show .nlayer_content{
+    transform: translate3d(0, 0, 0);
+}
+
+/*  动画系列 由大变小
+    nlayerclass="ANIMATITE_SCALE_TO_SMALL"
+    nlayercontentclass="nlayercontent"
+    nshowclass="show"
+*/
+
+.ANIMATITE_SCALE_TO_SMALL .nlayer_content{
+    transform: scale(1.185);
+}
+.ANIMATITE_SCALE_TO_SMALL.show .nlayer_content{
+    transform: scale(1);
+}
+
+/*  动画系列 由小变大
+    nlayerclass="ANIMATITE_SCALE_TO_BIG"
+    nlayercontentclass="nlayercontent"
+    nshowclass="show"
+*/
+
+.ANIMATITE_SCALE_TO_BIG .nlayer_content{
+    transform: scale(0.85) translate3d(0,0,0);
+}
+.ANIMATITE_SCALE_TO_BIG.show .nlayer_content{
+    transform: scale(1) translate3d(0,0,0);
+}
+
+/*无动画*/
+.NOANIMATE .nlayer_mask{
+    transition: 0s;
+}
+.NOANIMATE .nlayer_content{
+    transition: 0s;
+}
+
+/*  TOAST弹窗
+    nlayerclass="NTOAST"
+    nlayercontentclass="nlayercontent"
+*/
+.NTOAST .nlayer_content{
+    background: none;
+}
+.TOAST{
+    background: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    border-radius: 0.08rem;
+    font-size: 0.24rem;
+    padding: .146rem .25rem;
+}
+
+.BACKTIPS .nlayer_content{
+    bottom: 1.5rem;
+    transition: all 210ms ease;
+}
+
+
+
+/*  DIALOG弹窗
+    nlayerclass="NDIALOG"
+    nlayercontentclass="nlayercontent"
+*/
+.NDIALOG .nlayer_content{ border-radius: .1rem; overflow: hidden; }
+.DIALOG{ text-align: center;  }
+.DIALOG_TITLE{
+    font-size: .3rem; line-height: 2.5;
+    color: #333; border-bottom: 1px solid #f3f3f3;
+}
+.DIALOG_CONTENT{
+    font-size: .25rem; color: #666; line-height: 1.8;
+    padding: .3rem;
+
+}
+.DIALOG_INPUT{
+    font-size: 0.32rem;
+    color: #333; line-height: 0.85rem;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #fafafa;
+    background: #f3f3f3;
+    padding: 0 0.15rem;
+}
+.DIALOG_BTNS{
+    border-top: 1px solid #f3f3f3; display: flex;
+}
+.DIALOG_BTN{
+    flex: 1; font-size: .3rem; line-height: 2.54;
+}
+.DIALOG_BTN.CONFIRM{ color: #203395 ; }
+.DIALOG_BTN.DEFAULT{ color: #999; }
+.DIALOG_BTN+.DIALOG_BTN{
+    border-left: 1px solid #f3f3f3;
+}
+
+/*  ACTIONBAR
+    nlayerclass="ANIMATITE_BOTTOM_TO_TOP"
+    nlayercontentclass="nlayercontent"
+    nshowclass="show"
+*/
+.ACTIONBAR{ background: #dbdbdb; }
+.ACTIONBAR_ITEM{
+    height: .96rem; font-size: .28rem; color: #333; background: #fff;
+    display: flex; align-items: center; justify-content: center;
+}
+.ACTIONBAR_ITEM+.ACTIONBAR_ITEM{ border-top: 1px solid #f3f3f3; }
+.ACTIONBAR_ITEM.RED{ color: #FF4646 }
+.ACTIONBAR_ITEM.CANCEL{ margin-top: .1rem; }
+
+/*  LOADING
+    maskCancel="{{false}}"
+    maskBackgroundColor="rgba(0,0,0,0)"
+    visible="{{showLoading}}"
+    nlayerclass="ANIMATITE_SCALE_TO_BIG LOADING"
+    nlayercontentclass="nlayercontent"
+    nshowclass="show"
+*/
+.NLOADING .nlayer_content{
+    border-radius: 0.08rem;
+    background: rgba(0,0,0,0.7);
+}
+.LOADING{
+    padding:.15rem .4rem .15rem;
+    display: flex; align-items: center;
+    flex-direction: column;
+}
+.LOADING_TXT{ font-size: .24rem; color: #fff; line-height: .5rem; }

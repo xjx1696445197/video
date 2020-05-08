@@ -1,0 +1,56 @@
+.mauto{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*工具类*/
+.thide{
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+
+.thides{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow:ellipsis;
+}
+.thides2{
+    -webkit-line-clamp: 2;
+}
+.thides3{
+    -webkit-line-clamp: 3;
+}
+.thides4{
+    -webkit-line-clamp: 4;
+}
+
+.radius-half{
+    border-radius: 50rem;
+}
+.radius-round{
+    border-radius: 100%;
+}
+
+.tcenter{
+    text-align: center;
+}
+.fweight{
+    font-weight: bold;
+}
+
+
+/*浮动类*/
+/*功能*/
+.fl{ float: left; }
+.fr{ float: right; }
+.txtl{text-align: left; }
+.txtr{text-align: right; }
+.ib{ display: inline-block; }
+.clearfix:after{
+    content:" "; display:block; height:0; clear:both; visibility:hidden; overflow:hidden; font-size: 0;
+}
+.clear{
+    clear: both; display: block; font-size: 0; height: 0;
+}
