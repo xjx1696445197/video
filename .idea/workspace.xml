@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="1ed163fe-7ab4-45df-b2a5-14e1f6ef649e" name="Default" comment="dasdsss" />
+    <list default="true" id="1ed163fe-7ab4-45df-b2a5-14e1f6ef649e" name="Default" comment="dasdsss">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -188,6 +199,7 @@
       <workItem from="1588906321824" duration="1254000" />
       <workItem from="1588907600639" duration="414000" />
       <workItem from="1588908626579" duration="212000" />
+      <workItem from="1588908858122" duration="655000" />
     </task>
     <task id="LOCAL-00001" summary="dasd">
       <created>1588907512438</created>
@@ -203,11 +215,54 @@
       <option name="project" value="LOCAL" />
       <updated>1588907638886</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="dasdsss">
+      <created>1588908924830</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1588908924830</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="1">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="roots">
+                    <value>
+                      <list>
+                        <option value="$PROJECT_DIR$" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="1" value="TOOL_WINDOW" />
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="dasd" />
@@ -221,10 +276,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1588907730430" />
-    <state x="558" y="95" key="CommitChangelistDialog2" timestamp="1588907835789">
+    <state x="558" y="95" key="CommitChangelistDialog2" timestamp="1588908920435">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="558" y="95" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1588907835789" />
+    <state x="558" y="95" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1588908920435" />
     <state x="852" y="294" key="FileChooserDialogImpl" timestamp="1588906016358">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -233,6 +288,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="151" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1588906758280" />
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1588909443526">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1588909443526" />
+    <state x="779" y="253" key="VcsDiffUtil.ChangesDialog" timestamp="1588908908701">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="779" y="253" key="VcsDiffUtil.ChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1588908908701" />
     <state x="753" y="432" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1588907206079">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
