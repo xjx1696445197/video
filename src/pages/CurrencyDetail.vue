@@ -93,7 +93,9 @@
             </div>
         </div>-->
             </div>
-            <div class="content">
+            <div :class="currencyName == 'HALE' ? 'content_HALE' : 'content_CHMC'"
+                 class="content"
+            >
                 <div class="content_pos">
                     <md-tab-bar
                             :items="currencyName == 'CHMC'? tabs:tabss"
@@ -954,8 +956,13 @@
         border-left: 1px solid #203395;
         padding-right: 0.1rem;
     }
-    .content{
+
+    .content_CHMC {
         margin-top: 0.5rem;
+    }
+
+    .content_HALE {
+        margin-top: 0.4rem;
     }
 
     .md-scroll-view .scroll-view-container {
