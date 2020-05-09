@@ -518,19 +518,22 @@
 //      	this.openRealAuthenErrorDig()
 		},
 		computed: {
-			userinfo(){
-				return this.getUserinfo()
-			},
-			userId(){
-				return this.userinfo.customerId
-			},
-			validateOtions(){
-				// 验证格式及错误信息
-				const res = {
-					username: {
-						rules:{
-							required: true
-						},
+            userinfo() {
+                return this.getUserinfo()
+            },
+            customerToken() {
+                return this.userinfo.customerToken
+            },
+            userId() {
+                return this.userinfo.customerId
+            },
+            validateOtions() {
+                // 验证格式及错误信息
+                const res = {
+                    username: {
+                        rules: {
+                            required: true
+                        },
 						msg:{
 							required: '请输入您的姓名'
 						}
@@ -943,18 +946,19 @@
 				console.log(this.formData)
 
 				jsonAjax.post(urlUtil.getApiUrl("real_authen"), {
-					userId:that.userId,
-					userName:that.formData.username,
-					idCardNumber:that.showCode != 1? that.formData.usercards : that.formData.usercard,
-					type:that.showCode,
-					province:that.provName,
-					city:that.cityName,
-					county:that.countryName,
-					town:that.formData.town,
-					certificatesDate:that.showCode != 1 ? that.formData.year+that.formData.month+that.formData.day :'',
-					issueNum:that.showCode != 1 ? that.formData.changeTime:'',
-					birth:that.showCode != 1 ? that.formData.birthYear+that.formData.birthMonth+that.formData.birthDay :''
-				}, function (result) {
+                    userId: that.userId,
+                    userName: that.formData.username,
+                    idCardNumber: that.showCode != 1 ? that.formData.usercards : that.formData.usercard,
+                    type: that.showCode,
+                    province: that.provName,
+                    city: that.cityName,
+                    county: that.countryName,
+                    town: that.formData.town,
+                    certificatesDate: that.showCode != 1 ? that.formData.year + that.formData.month + that.formData.day : '',
+                    issueNum: that.showCode != 1 ? that.formData.changeTime : '',
+                    birth: that.showCode != 1 ? that.formData.birthYear + that.formData.birthMonth + that.formData.birthDay : '',
+                    customerToken: this.customerToken
+                }, function (result) {
 					console.log(result)
 //                  return
 					if( result.returnCode == 1 ){

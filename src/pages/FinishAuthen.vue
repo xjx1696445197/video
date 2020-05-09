@@ -16,9 +16,9 @@
                         <p class="finishAuthen_txt3 fr">{{realName}}</p>
                     </div>
                     <div class="finishAuthen_item clearfix">
-                        <p class="finishAuthen_txt2 fl"  v-if="showCode==1">身份证号</p>
-                        <p class="finishAuthen_txt2 fl"  v-if="showCode==2">港澳居民来往内地通行证</p>
-                        <p class="finishAuthen_txt2 fl"  v-if="showCode==3">台湾居民来往内地通行证</p>
+                        <p class="finishAuthen_txt2 fl" v-if="showCode==1">身份证号</p>
+                        <p class="finishAuthen_txt2 fl" v-if="showCode==2">港澳居民身份证</p>
+                        <p class="finishAuthen_txt2 fl" v-if="showCode==3">台湾居民身份证</p>
                         <p class="finishAuthen_txt3 fr">{{detail.idCardNumber | idCardFormat}}</p>
                     </div>
                     <!--<div class="finishAuthen_item clearfix">
@@ -34,40 +34,71 @@
             </div>
 
         </div>
+        <nlayer
+                :autoClose="1200"
+                :maskCancel="false"
+                :visible="tipsVisible"
+                :zIndex="1000"
+                @close="tipsClosed"
+                class="NTOAST ANIMATITE_SCALE_TO_BIG"
+                maskBackgroundColor="rgba(0,0,0,0)"
+        >
+            <div class='TOAST' v-text="tips"></div>
+        </nlayer>
     </div>
 </template>
 <script>
-    import { mapGetters,mapActions } from 'vuex'
+    import {mapGetters, mapActions} from 'vuex'
+    import Nlayer from '@/components/Nlayer'
 
     export default {
         name: "FinishAuthen",
-        data () {
+        components: {
+            Nlayer
+        },
+        data() {
             return {
-                detail:{},
-                realName:''
+                detail: {},
+                realName: '',
+                tips: '',
+                tipsVisible: false,
             }
         },
-        mounted(){
+        mounted() {
             // 判断是否有数据
             this.isLogin()
         },
-        computed:{
-            userinfo(){
+        computed: {
+            userinfo() {
                 return this.getUserinfo()
             },
-            userId(){
+            userId() {
                 return this.userinfo.customerId
             },
-            showCode(){
+            customerToken() {
+                return this.userinfo.customerToken
+            },
+            showCode() {
                 return this.$route.query.showCode
             },
         },
         methods: {
-            ...mapActions(['setUserinfo']),
+            ...mapActions(['setUserinfo', 'setUserinfo']),
             ...mapGetters(['getUserinfo']),
+            // 打开消息提示
+            showTips(msg) {
+                console.log(msg)
+                this.tips = msg
+                this.tipsVisible = true
+            },
+            // 监听消息提示关闭
+            tipsClosed() {
+                this.msg = ''
+                this.tipsVisible = false
+            },
             // 检测用户是否登录
-            isLogin(){
-                if( this.userinfo ){
+            isLogin() {
+                if (this.userinfo) {
                     // 请求用户信息
                     this.getUserInfo()
                 } else {
@@ -80,18 +111,28 @@
             },
         //    获取当前实名认证信息
             getUserInfo(){
+                var that = this;
                 this.$http.get('app/aip/findUserInfo', {
-                    userId: this.userId
+                    userId: this.userId,
+                    customerToken: this.customerToken
                 }).then((res) => {
                     console.log(res)
-                    if( res.returnCode == 1 ){
+                    if (res.returnCode == 1) {
                         this.detail = res.resultData
-                        this.realName = "*"+this.detail.userName.substring(1,this.detail.userName.length)
+                        this.realName = "*" + this.detail.userName.substring(1, this.detail.userName.length)
                         this.setUserinfo({
                             ...this.userinfo,
                             certification: 1
                         })
                         localStorage.setItem('certification', 1)
+                    } else {
+                        that.showTips(res.message)
+                        // 跳转到登录页面
+                        setTimeout(function () {
+                            that.$router.replace({
+                                path: '/login'
+                            })
+                        }, 1000)
                     }
                 })
             },

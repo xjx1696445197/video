@@ -105,13 +105,16 @@
 
         },
         computed:{
-            userinfo(){
+            userinfo() {
                 return this.getUserinfo()
             },
-            userId(){
+            customerToken() {
+                return this.userinfo.customerToken
+            },
+            userId() {
                 return this.userinfo.customerId
             },
-            Name(){
+            Name() {
                 return this.$route.query.name
             },
         },
@@ -127,6 +130,7 @@
             },
             // 上传人脸正面照
             uploadFaceImage(){
+                console.log(this.baseURL)
                 console.log('开始验证')
                 if(!this.checkFace()){
                     return
@@ -135,7 +139,7 @@
                 // 打开加载中
                 this.showLoading()
 
-                var url = this.baseURL+'app/aip/personVerify'
+                var url = this.baseURL + 'app/auth/personVerify'
                 var data = [
                     {
                         type: 'file',
@@ -151,6 +155,11 @@
                         type: 'string',
                         name: 'userId',
                         value: this.userId.toString()
+                    },
+                    {
+                        type: 'string',
+                        name: 'customerToken',
+                        value: this.customerToken
                     }
                 ]
 

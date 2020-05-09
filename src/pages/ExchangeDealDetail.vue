@@ -130,22 +130,25 @@
             }
         },
         computed: {
-            currencyName(){
+            currencyName() {
                 return this.$route.query.currencyName
             },
-            userinfo(){
+            userinfo() {
                 return this.getUserinfo()
             },
-            userId(){
+            customerToken() {
+                return this.userinfo.customerToken
+            },
+            userId() {
                 return this.userinfo.userId
             },
-            querys(){
+            querys() {
                 return this.$route.query
             },
-            receiveTip(){
+            receiveTip() {
                 return this.$t('currencyDetail.currencyDetail_receivablesTitle')
             },
-            transferTip(){
+            transferTip() {
                 return this.$t('currencyDetail.currencyDetail_transferAccountsTitle')
             },
             isFinish(){
@@ -238,7 +241,8 @@
             getDetail(){
                 // /app/wallet/userWalletTransfer/getExchangeInfoByOrderId
                 this.$http.get('app/wallet/userWalletTransfer/getExchangeInfoByOrderId', {
-                    orderId: this.querys.id
+                    orderId: this.querys.id,
+                    customerToken: this.customerToken
                 }).then((res) => {
                     console.log(res)
 //                  return

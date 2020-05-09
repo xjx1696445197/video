@@ -65,6 +65,16 @@
                 </div>
             </div>
         </div>
+        <nlayer
+                :autoClose="1200"
+                :maskCancel="false"
+                :visible="tipsVisible"
+                @close="tipsClosed"
+                class="NTOAST ANIMATITE_SCALE_TO_BIG"
+                maskBackgroundColor="rgba(0,0,0,0)"
+        >
+            <div class='TOAST' v-text="tips"></div>
+        </nlayer>
     </div>
 </template>
 
@@ -72,6 +82,7 @@
     import ScrollView from 'mand-mobile/lib/scroll-view'
     import ScrollViewRefresh from 'mand-mobile/lib/scroll-view-refresh'
     import ScrollViewMore from 'mand-mobile/lib/scroll-view-more'
+    import Nlayer from '@/components/Nlayer'
 
     import { mapGetters, mapActions } from 'vuex'
 
@@ -82,7 +93,8 @@
         components: {
             [ScrollView.name]: ScrollView,
             [ScrollViewRefresh.name]: ScrollViewRefresh,
-            [ScrollViewMore.name]: ScrollViewMore
+            [ScrollViewMore.name]: ScrollViewMore,
+            Nlayer
         },
         data(){
             return {
@@ -90,14 +102,19 @@
                 pageSize: 8,
                 list: [],
                 type: "6",
-                isFinished: false
+                isFinished: false,
+                tips: '',
+                tipsVisible: false,
             }
         },
         computed: {
-            userinfo(){
+            userinfo() {
                 return this.getUserinfo()
             },
-            userId(){
+            customerToken() {
+                return this.userinfo.customerToken
+            },
+            userId() {
                 return this.userinfo.customerId
             }
         },
@@ -108,16 +125,27 @@
             ...mapActions(['setUserNoticeState']),
             ...mapGetters(['getUserinfo']),
             // 初始化scrollview
-            initScrollView(){
+            initScrollView() {
                 this.$refs.scrollView.init()
             },
+            // 打开消息提示
+            showTips(msg) {
+                this.tips = msg
+                this.tipsVisible = true
+            },
+            // 监听消息提示关闭
+            tipsClosed() {
+                this.msg = ''
+                this.tipsVisible = false
+            },
             // 全标已读 app/message/markReadMsg js/message/markReadMsg
-            setAllRead(){
+            setAllRead() {
                 this.$http.get('app/message/markReadMsg', {
                     userId: this.userId,
-                    msgType: this.type
+                    msgType: this.type,
+                    customerToken: this.customerToken
                 }).then((res) => {
-                    if( res.returnCode == 1 ){
+                    if (res.returnCode == 1) {
                         this.$refs.scrollView.triggerRefresh()
                         this.setUserNoticeState()
                     }
@@ -125,12 +153,14 @@
             },
             // 加载数据 app/message/getMsgPageListByUserId js/message/getMsgPageListByUserId
             getData(refresh=false){
+                var that = this;
                 return this.$http.get('app/message/getMsgPageListByUserId', {
                     userId: this.userId,
                     msgType: this.type,
                     languageType: 1,
                     pageSize: this.pageSize,
-                    pageNo: this.pageNo
+                    pageNo: this.pageNo,
+                    customerToken: this.customerToken
                 }).then((res) => {
                     if( res.returnCode == 1 ){
                         if( refresh ){
@@ -143,10 +173,18 @@
                         this.$refs.scrollView.finishLoadMore()
                         this.pageNo += 1
 
-                        if( res.resultData < this.pageSize ){
+                        if (res.resultData < this.pageSize) {
                             this.isFinished = true
                             this.$refs.scrollView.loadend()
                         }
+                    } else {
+                        that.showTips(res.message)
+                        // 跳转到我的页面
+                        setTimeout(() => {
+                            that.$router.replace({
+                                path: '/login'
+                            })
+                        }, 1000)
                     }
                 })
             },

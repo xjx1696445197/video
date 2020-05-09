@@ -126,22 +126,25 @@
             }
         },
         computed: {
-            userinfo(){
+            userinfo() {
                 return this.getUserinfo()
             },
-            userId(){
+            userId() {
                 return this.userinfo.customerId
             },
-            querys(){
+            customerToken() {
+                return this.userinfo.customerToken
+            },
+            querys() {
                 return this.$route.query
             },
-            receiveTip(){
+            receiveTip() {
                 return this.$t('currencyDetail.currencyDetail_receivablesTitle')
             },
-            transferTip(){
+            transferTip() {
                 return this.$t('currencyDetail.currencyDetail_transferAccountsTitle')
             },
-            isFinish(){
+            isFinish() {
                 return this.$t('statustest.status_transfer')
             },
             Finished(){
@@ -238,7 +241,8 @@
             getDetail(){
                 this.$http.get('app/wallet/userWalletTransfer/getTransferInfoByOrderId', {
                     orderId: this.querys.id,
-                    currency:this.querys.currencyName
+                    currency: this.querys.currencyName,
+                    customerToken: this.customerToken
                 }).then((res) => {
                     console.log(res)
                     if( res.success ){
@@ -254,7 +258,8 @@
             markRead(){
                 this.$http.get('app/message/markReadMsg', {
                     userId: this.userId,
-                    id: this.querys.newsId
+                    id: this.querys.newsId,
+                    customerToken: this.customerToken
                 }).then((res) => {
                     if( res.returnCode == 1 ){
                     	this.setUserNoticeState()

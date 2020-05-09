@@ -140,14 +140,31 @@
                 class="NLOADING"
         >
             <div class="LOADING">
-                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve" width="0.8rem" height="0.8rem">
-                    <path opacity="0.1" fill="#fff" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"></path>
-                    <path fill="#fff" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0C22.32,8.481,24.301,9.057,26.013,10.047z">
-                        <animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="0.5s" repeatCount="indefinite"></animateTransform>
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+                     y="0px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve" width="0.8rem"
+                     height="0.8rem">
+                    <path opacity="0.1" fill="#fff"
+                          d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"></path>
+                    <path fill="#fff"
+                          d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0C22.32,8.481,24.301,9.057,26.013,10.047z">
+                        <animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 20 20"
+                                          to="360 20 20" dur="0.5s" repeatCount="indefinite"></animateTransform>
                     </path>
                 </svg>
                 <p class="LOADING_TXT">{{$t('layerdate.layerdate_loading')}}</p>
             </div>
+        </nlayer>
+
+        <nlayer
+                :autoClose="1200"
+                :maskCancel="false"
+                :visible="tipsVisible"
+                :zIndex="1000"
+                @close="tipsClosed"
+                class="NTOAST ANIMATITE_SCALE_TO_BIG"
+                maskBackgroundColor="rgba(0,0,0,0)"
+        >
+            <div class='TOAST' v-text="tips"></div>
         </nlayer>
     </div>
 </template>
@@ -163,10 +180,12 @@
         data() {
             return {
                 loadingVisible: true,
-                userdata:"",
-                userdatalist:"",
-                userId:JSON.parse(localStorage.getItem('userinfo')).customerId,
-                loadingnuber:0
+                userdata: "",
+                userdatalist: "",
+                userId: JSON.parse(localStorage.getItem('userinfo')).customerId,
+                loadingnuber: 0,
+                tips: '',
+                tipsVisible: false,
             }
         },
         created() {
@@ -177,12 +196,25 @@
                 if(that.loadingnuber==2){
                     that.loadingVisible=false;
                 }
+
+
             });
             jsonAjax.post(urlUtil.getApiUrl("getUserTeamSelfInfo"), {userId:that.userId}, function (result) {
-                that.userdata=result.result
-                that.loadingnuber=that.loadingnuber+1
-                if(that.loadingnuber==2){
-                    that.loadingVisible=false;
+                that.userdata = result.resultData
+                that.loadingnuber = that.loadingnuber + 1
+                if (that.loadingnuber == 2) {
+                    that.loadingVisible = false;
+                }
+                if (result.returnCode) {
+                } else {
+                    // 检测errorCode 是否为00101
+                    that.showTips(result.message)
+                    // 跳转到登录页面
+                    setTimeout(function () {
+                        that.$router.replace({
+                            path: '/login'
+                        })
+                    }, 1000)
                 }
                 console.log(that.userdata)
             });
@@ -201,6 +233,19 @@
                 let s = date.getSeconds()
                 s = s < 10 ? ('0' + s) : s
                 return y + '/' + MM + '/' + d
+            },
+        },
+        methods: {
+            // 打开消息提示
+            showTips(msg) {
+                console.log(msg)
+                this.tips = msg
+                this.tipsVisible = true
+            },
+            // 监听消息提示关闭
+            tipsClosed() {
+                this.msg = ''
+                this.tipsVisible = false
             },
         }
     }

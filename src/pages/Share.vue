@@ -223,10 +223,16 @@
                 var that=this;
                 jsonAjax.get(urlUtil.getApiUrl("findUserShareimg"), {userId:that.userId.customerId}, function (res) {
                     that.closeLoading()
-                    if( res.success ){
-                        that.detail = res.result
+                    if (res.returnCode) {
+                        that.detail = res.resultData
                     } else {
                         that.showTips(res.message)
+                        // 跳转到登录页面
+                        setTimeout(function () {
+                            that.$router.replace({
+                                path: '/login'
+                            })
+                        }, 1000)
                     }
                 })
                 //

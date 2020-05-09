@@ -539,19 +539,22 @@
             localStorage.removeItem('integralmsg');
         },
         computed: {
-            token(){
+            token() {
                 return this.$route.query.token
             },
-            userinfo(){
+            showCode() {
+                return this.userinfo.showCode
+            },
+            userinfo() {
                 return this.getUserinfo()
             },
-            userId(){
+            userId() {
                 return this.userinfo.customerId
             },
-            realVipList(){
-                console.log(this.vipLevel+'ppp')
+            realVipList() {
+                console.log(this.vipLevel + 'ppp')
                 // 根据用户等级更新vipList
-                return this.vipList.map((item)=>{
+                return this.vipList.map((item) => {
                     console.log(item)
                     if( item.level <=	 parseInt(this.vipLevel) ){
                         return {
@@ -574,16 +577,19 @@
             needUpdate(){
                 return this.getNeedUpdate()
             },
-            updateDetail(){
+            updateDetail() {
                 return this.getUpdateDetail()
             },
-            loginTip(){
+            loginTip() {
                 return this.$t('login.login_tips')
             },
-            userName(){
+            userName() {
                 return this.userinfo.userName
             },
-            Sidebars(){
+            customerToken() {
+                return this.userinfo.customerToken
+            },
+            Sidebars() {
                 return this.getSidebars()
             },
         },
@@ -706,12 +712,13 @@
                     // 请求我的资产数据
                     this.getMyAsset()
                     //    是否开启弹窗
+                    // 加入缓存信息
+                    this.getUserInfo()
                     // 登录里加判断
-                    if(!JSON.parse(localStorage.getItem('certification'))){
+                    if (!JSON.parse(localStorage.getItem('certification'))) {
                         this.openNoRealAuthenDig()
-                    }else{
-                    	// 加入缓存信息
-                    	this.getUserInfo()
+                    } else {
+
                     }
                     // 获取用户是否有未读消息
                     this.setUserNoticeState()
@@ -739,8 +746,18 @@
                         that.vipLevel = vipLevel
                         that.agentLevel = agentLevel
                         console.log(agentLevel,starLevel,vipLevel)
-                    }else{
-                        that.showTips('获取数据失败!')
+                    }else {
+                        // 检测errorCode 是否为00101
+                        if (result.resultData.errorCode == '00101') {
+                            that.showTips(result.message)
+                            // 跳转到登录页面
+                            setTimeout(function () {
+                                that.$router.replace({
+                                    path: '/login'
+                                })
+                            }, 1000)
+                        }
+
                     }
                 })
             },
@@ -784,16 +801,20 @@
             },
             // 获取地区信息
             getUserInfo(){
+                var that = this
                 this.$http.get('app/aip/findUserInfo', {
-                    userId: this.userId
+                    userId: that.userId,
+                    customerToken: that.customerToken
                 }).then((res) => {
                     console.log(res)
-                    if( res.returnCode == 1 ){
-                        this.setUserinfo({
-                            ...this.userinfo,
+                    if( res.returnCode == 1 ) {
+                        that.setUserinfo({
+                            ...that.userinfo,
                             certification: 1,
-                            showCode:res.resultData.status == null ? 1 : res.resultData.status
+                            showCode: res.resultData.status == null ? 1 : res.resultData.status
                         })
+
+                        console.log(that.userinfo)
                     }
                 })
             },
@@ -812,26 +833,17 @@
                     if( result.returnCode == 1 ){
                         that.assetDetail = result.resultData
                         console.log(parseFloat(that.assetDetail.HALE))
-                    }else{
-                        that.showTips('获取数据失败!')
-                    }
-                })
-            },
-            // 获取登录时的资产列表
-            getAccountList(){
-                this.$http.get('js/userWallet/getUserWallet', {
-                    userId: this.userId
-                }).then((res) => {
-                    if( res.success ){
-                        this.accountList = res.result.list
-                    }
-                })
-            },
-            // 获取没有登录时的资产列表
-            getAccountListNoLogin(){
-                this.$http.get('js/usersLogin/getUserWallet').then((res) => {
-                    if( res.success ){
-                        this.accountList = res.result
+                    }else {
+                        // that.showTips('获取数据失败!')
+                        if (result.resultData.errorCode == '00101') {
+                            that.showTips(result.message)
+                            setTimeout(function () {
+                                that.$router.replace({
+                                    path: '/login'
+                                })
+                            }, 600)
+                            // 跳转到登录页面
+                        }
                     }
                 })
             },

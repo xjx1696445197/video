@@ -424,13 +424,22 @@
                     console.log(result)
                     if( result.returnCode == 0 ){
                         that.showTips(result.message)
+                        if (result.resultData.errorCode && result.resultData.errorCode == "00101") {
+                            that.showTips(result.message)
+                            // 跳转到登录页面
+                            setTimeout(function () {
+                                that.$router.replace({
+                                    path: '/login'
+                                })
+                            }, 1000)
+                        }
                     }
                     if( result.returnCode == 1 ){
                         that.showTips(result.message)
                         that.sureCode=""
                         that.formData.pwd=""
-                        that.formData.confirmPwd=""
-
+                        that.formData.confirmPwd = ""
+                        that.$router.go(-1);
                     }
                 })
 

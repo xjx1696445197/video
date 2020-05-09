@@ -192,13 +192,25 @@
                     <div
                             class='DIALOG_BTN DEFAULT'
                             @click='closeNoRealAuthenDig'
-                    >{{$t('layerdate.layerdate_btnCancel')}}</div>
+                    >{{$t('layerdate.layerdate_btnCancel')}}
+                    </div>
                     <div
                             class='DIALOG_BTN CONFIRM'
                             @click='toIdCardAuthen'
-                    >{{$t('layerdate.layerdate_authen')}}</div>
+                    >{{$t('layerdate.layerdate_authen')}}
+                    </div>
                 </div>
             </div>
+        </nlayer>
+        <nlayer
+                :autoClose="1200"
+                :maskCancel="false"
+                :visible="tipsVisible"
+                @close="tipsClosed"
+                class="NTOAST ANIMATITE_SCALE_TO_BIG"
+                maskBackgroundColor="rgba(0,0,0,0)"
+        >
+            <div class='TOAST' v-text="tips"></div>
         </nlayer>
     </div>
 </template>
@@ -273,10 +285,13 @@
 
                 return original
             },
-            userinfo(){
+            userinfo() {
                 return this.getUserinfo()
             },
-            userId(){
+            customerToken() {
+                return this.userinfo.customerToken
+            },
+            userId() {
                 return this.userinfo.customerId
             }
         },
@@ -328,18 +343,6 @@
                     }
                 })
 
-                return
-                this.$http.post('app/wallet/userWallet/getRateByCurrency', {
-                    userId: this.userId,
-                    currency: 'CREDITS'
-                }).then((res) => {
-                    console.log(res)
-                    return
-                    if( res.success ){
-                        this.detail = res.result
-                        this.initCopyer(res.result.address)
-                    }
-                })
             },
             // 跳转到实名认证
             toIdCardAuthen(){
@@ -378,13 +381,15 @@
             // 加载数据
             getData(refresh=false){
 //              return
+                var that = this
                 this.$http.get('app/wallet/userWalletTransfer/getUserTransfer', {
                     userId: this.userId,
                     type: this.type,
                     currency: 'CREDITS',
                     pageSize: this.pageSize,
                     pageNo: this.pageNo,
-                    stater:1
+                    stater: 1,
+                    customerToken: this.customerToken
                 }).then((res) => {
                     console.log(res)
                     if( res.returnCode == 1 ){
@@ -399,9 +404,19 @@
                         this.pageNo += 1
                         this.locked = false
 
-                        if( res.resultData.length < this.pageSize ){
+                        if (res.resultData.length < this.pageSize) {
                             this.isFinished = true
                             this.$refs.scrollView.loadend()
+                        }
+                    } else {
+                        if (res.resultData.errorCode == '00101') {
+                            this.showTips(res.message)
+                            // 跳转到登录页面
+                            setTimeout(function () {
+                                that.$router.replace({
+                                    path: '/login'
+                                })
+                            }, 1000)
                         }
                     }
                 })

@@ -88,6 +88,16 @@
                     jsonAjax.post(urlUtil.getApiUrl("updatePassword"), {customerToken:that.token.customerToken,userId:that.userId,password:that.oldpassword,newPassword:that.newpassword,againNewPassword:that.newpasswords,type:1}, function (result) {
                        if (result.returnCode==0){
                            that.showTips(result.message)
+                           if (result.resultData.errorCode && result.resultData.errorCode == "00101") {
+                               that.showTips(result.message)
+                               // 跳转到登录页面
+                               setTimeout(function () {
+                                   that.$router.replace({
+                                       path: '/login'
+                                   })
+                               }, 1000)
+                           }
+
                        }else if (result.returnCode==1) {
                            that.showTips(result.message)
                            localStorage.removeItem('userinfo')

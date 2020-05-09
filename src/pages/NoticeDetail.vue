@@ -27,13 +27,16 @@
             }
         },
         computed: {
-            id(){
+            id() {
                 return this.$route.query.id
             },
-            userinfo(){
+            userinfo() {
                 return this.getUserinfo()
             },
-            userId(){
+            customerToken() {
+                return this.userinfo.customerToken
+            },
+            userId() {
                 return this.userinfo.customerId
             }
         },
@@ -46,8 +49,9 @@
             ...mapGetters(['getUserinfo']),
             // 获取详情
             getDetail(){
-                this.$http.get(`app/message/getMsgById`,{
-                    id:this.id
+                this.$http.get(`app/message/getMsgById`, {
+                    id: this.id,
+                    customerToken: this.customerToken
                 }).then((res) => {
                     if( res.returnCode == 1 ){
                         this.detail = res.resultData
@@ -69,7 +73,8 @@
 
                 this.$http.get('app/message/markReadMsg', {
                     userId: this.userId,
-                    id: this.id
+                    id: this.id,
+                    customerToken: this.customerToken
                 }).then((res) => {
                     if( res.returnCode == 1 ){
                         this.setUserNoticeState()

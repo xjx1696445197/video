@@ -237,16 +237,24 @@
                     currency: 'HALE'
                 }, function (result) {
                     console.log(result)
-                    if( result.success ){
+                    if (result.success) {
                         that.detail = {
                             ...result.result.data,
                             tip: result.result.tip
                         }
                         console.log(that.detail)
                         that.initCopyer(that.detail.address)
-                        if( refresh ){
+                        if (refresh) {
                             that.showTips(that.shareTip11)
                         }
+                    } else {
+                        that.showTips(result.message)
+                        // 跳转到我的页面
+                        setTimeout(() => {
+                            that.$router.replace({
+                                path: '/login'
+                            })
+                        }, 1000)
                     }
 //              	if( result.success ){
 //              		that.detail = result.result

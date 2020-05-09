@@ -99,22 +99,25 @@
             }
         },
         computed: {
-            showCode(){
+            showCode() {
                 return this.$route.query.showCode
             },
-            name(){
+            name() {
                 return this.$route.query.name
             },
-            usercards(){
+            usercards() {
                 return this.$route.query.usercards
             },
-            userinfo(){
+            customerToken() {
+                return this.userinfo.customerToken
+            },
+            userinfo() {
                 return this.getUserinfo()
             },
-            userId(){
+            userId() {
                 return this.userinfo.customerId
             },
-            validateOtions(){
+            validateOtions() {
                 // 验证格式及错误信息
                 const res = {
                     username: {
@@ -188,10 +191,11 @@
                 console.log(this.formData)
                 var that = this
                 jsonAjax.post(urlUtil.getApiUrl("real_second_authen"), {
-                    userId:that.userId,
-                    userName:that.formData.username,
-                    bankCardNumber:that.formData.bankcard,
-                    idCardNumber:that.formData.usercards
+                    userId: that.userId,
+                    userName: that.formData.username,
+                    bankCardNumber: that.formData.bankcard,
+                    idCardNumber: that.formData.usercards,
+                    customerToken: this.customerToken
                 }, function (result) {
                     console.log(result)
 //                  return

@@ -73,6 +73,7 @@
 
 <script>
     // 验证格式及错误信息
+    import {mapGetters, mapActions} from 'vuex'
 
     import urlUtil from '../util/apiUtil.js';
     import jsonAjax from '../util/restUtil.js';
@@ -92,7 +93,17 @@
                 tipsVisible: false
             }
         },
+
         computed: {
+            userinfo() {
+                return this.getUserinfo()
+            },
+            userId() {
+                return this.userinfo.customerId
+            },
+            customerToken() {
+                return this.userinfo.customerToken
+            },
             textareaLength() {
                 let length = this.formData.content.length
                 if (length >= 200) {
@@ -151,6 +162,7 @@
             Nlayer
         },
         methods: {
+            ...mapGetters(['getUserinfo']),
             // 替换空格
             removeAllSpace(str) {
                 return str.replace(/\s+/g, "");
@@ -195,17 +207,19 @@
                 //     // }
                 // })
                 jsonAjax.post(urlUtil.getApiUrl("addOpinion"), {
-                    userId:2,
-                    userName:that.formData.name,
-                    userPhone:that.formData.tel,
-                    userEmail:that.formData.email,
-                    problemOpinion:that.formData.content}, function (result) {
-                    if (result.success){
+                    userId: that.userId,
+                    userName: that.formData.name,
+                    userPhone: that.formData.tel,
+                    userEmail: that.formData.email,
+                    problemOpinion: that.formData.content,
+                    customerToken: that.customerToken
+                }, function (result) {
+                    if (result.success) {
                         that.showTips(result.message)
-                        that.formData.name=''
-                        that.formData.tel=''
-                        that.formData.email=''
-                        that.formData.content=''
+                        that.formData.name = ''
+                        that.formData.tel = ''
+                        that.formData.email = ''
+                        that.formData.content = ''
                     } else {
                         that.showTips(result.message)
                     }

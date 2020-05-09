@@ -2,6 +2,8 @@
  * Created by on 2018/7/25.
  *  封装应用中使用到所有的api的URL
  */
+// var api_root = 'http://192.168.3.95:8184';//测试调试
+// var api_rootimg = 'http://192.168.3.95:8184';//测试调试
 // var api_root = 'http://39.106.90.111:8184';//测试调试
 // var api_rootimg = 'http://39.106.90.111:8184';//测试调试
 //

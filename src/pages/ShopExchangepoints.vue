@@ -382,10 +382,14 @@
             }
         },
         computed: {
-            userinfo(){
+            userinfo() {
                 return this.getUserinfo()
             },
-            userId(){
+            customerToken() {
+                return this.userinfo.customerToken
+            }
+            ,
+            userId() {
                 return this.userinfo.customerId
             }
         },
@@ -622,12 +626,20 @@
                 }, function (result) {
                     console.log(result)
 //              	return
-                    if( result.success ){
+                    if (result.success) {
                         that.detail = result.result
-                        that.amountstore=result.result.circulationRate
-                        that.amountstore1=1-result.result.circulationRate
+                        that.amountstore = result.result.circulationRate
+                        that.amountstore1 = 1 - result.result.circulationRate
 
 //              		that.amount = result.result.vip1Number
+                    } else {
+                        that.showTips(result.message)
+                        // 跳转到我的页面
+                        setTimeout(() => {
+                            that.$router.replace({
+                                path: '/login'
+                            })
+                        }, 1000)
                     }
                 })
             },
@@ -682,11 +694,12 @@
             sureExchange(){
                 // 请求兑换接口 exchange_chmc
                 this.$http.post('app/wallet/userWallet/exchangeToChmc', {
-                    userId:this.userId,
-                    amount:parseInt(this.toexchange),
-                    transPass:this.password,
-                    type:this.currency=="HALE"?1:2,
-                    exchangeNum:this.getintegral
+                    userId: this.userId,
+                    amount: parseInt(this.toexchange),
+                    transPass: this.password,
+                    type: this.currency == "HALE" ? 1 : 2,
+                    exchangeNum: this.getintegral,
+                    customerToken: this.customerToken
                 }).then((res) => {
                     console.log(res)
                     this.showTips(res.message)

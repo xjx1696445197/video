@@ -713,20 +713,33 @@
                 that.loadTxt='加载中...'
 
                 jsonAjax.get(urlUtil.getApiUrl('getVinVoutDetail'), {userId:that.userinfo.customerId,currency:that.currency,pageNo:that.curPage,pageSize:15,type:that.integralstro,time:that.systemDate}, function (result) {
-                    that.allvin=result.result.allVin
-                    that.allvout=result.result.allVout
-                    that.vin=result.result.vin
-                    that.vout=result.result.vout
+                    if (result.returnCode != 1) {
+                        that.showTips(result.message)
+                        // 跳转到我的页面
+                        setTimeout(() => {
+                            that.$router.replace({
+                                path: '/login'
+                            })
+                        }, 1000)
+
+                        return
+                    }
+                    that.allvin = result.resultData.allVin
+                    that.allvout = result.resultData.allVout
+                    that.vin = result.resultData.vin
+                    that.vout = result.resultData.vout
                     var allProducts = [];
-                    allProducts = allProducts.concat(that.userdata, result.result.list);
+
+                    allProducts = allProducts.concat(that.userdata, result.resultData.list);
                     that.userdata = allProducts
                     console.log(that.userdata)
-                    if(result.result.list==""){
-                        that.loadTag=false;
-                        that.loadTxt='没有更多数据'
-                    }else {
-                        that.loadTxt='加载完成'
+                    if (result.resultData.list == []) {
+                        that.loadTag = false;
+                        that.loadTxt = '没有更多数据'
+                    } else {
+                        that.loadTxt = '加载完成'
                     }
+
 
                 })
                     // jsonAjax.post(urlUtil.getApiUrl('getCreditsInputInfo'), {userId: that.$store.state.userinfo.userId,page:that.curPage}, function (result) {

@@ -460,11 +460,11 @@
                     }else{
                         that.showTips(result.message)
                         // 跳转到我的页面
-                        setTimeout(()=>{
+                        setTimeout(() => {
                             that.$router.replace({
-                                path: '/my'
+                                path: '/login'
                             })
-                        },2000)
+                        }, 1000)
 
                     }
                 })

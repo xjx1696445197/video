@@ -390,10 +390,13 @@
 
                 return original
             },
-            userinfo(){
+            userinfo() {
                 return this.getUserinfo()
             },
-            userId(){
+            customerToken() {
+                return this.userinfo.customerToken
+            },
+            userId() {
                 return this.userinfo.customerId
             }
         },
@@ -445,23 +448,23 @@
                 }, function (result) {
                     console.log(result)
 //              	return
-                    if( result.success ){
+                    if (result.success) {
                         that.detail = result.result.data
                         console.log(result.result.data.address)
                         that.initCopyer(result.result.data.address)
 //              		that.amount = result.result.vip1Number
                     }
                 })
-                return
-                this.$http.get('js/userWallet/getUserWalletDetail', {
-                    userId: this.userId,
-                    currency: this.currencyName
-                }).then((res) => {
-                    if( res.success ){
-                        this.detail = res.result
-                        this.initCopyer(res.result.address)
-                    }
-                })
+                // return
+                // this.$http.get('js/userWallet/getUserWalletDetail', {
+                //     userId: this.userId,
+                //     currency: this.currencyName
+                // }).then((res) => {
+                //     if( res.success ){
+                //         this.detail = res.result
+                //         this.initCopyer(res.result.address)
+                //     }
+                // })
             },
             // 设置初始type
             setType(){
@@ -473,6 +476,7 @@
             },
             // 加载数据
             getData(refresh=false){
+                var that = this;
 //              return
                 // / js/userWallet/getUserWalletTransfer
                 this.$http.get('app/wallet/userWalletTransfer/getUserTransfer', {
@@ -481,7 +485,8 @@
                     currency: this.currencyName,
                     pageSize: this.pageSize,
                     pageNo: this.pageNo,
-                    stater:1
+                    stater: 1,
+                    customerToken: this.customerToken
                 }).then((res) => {
                     console.log(res)
                     if( res.returnCode == 1 ){
@@ -499,9 +504,20 @@
                         this.pageNo += 1
                         this.locked = false
 
-                        if( res.resultData.length < this.pageSize ){
+                        if (res.resultData.length < this.pageSize) {
                             this.isFinished = true
                             this.$refs.scrollView.loadend()
+                        }
+                    } else {
+                        // 检测errorCode 是否为00101
+                        if (res.resultData.errorCode == '00101') {
+                            this.showTips(res.message)
+                            // 跳转到登录页面
+                            setTimeout(function () {
+                                that.$router.replace({
+                                    path: '/login'
+                                })
+                            }, 1000)
                         }
                     }
                 })
