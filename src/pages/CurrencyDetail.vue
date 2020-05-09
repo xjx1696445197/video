@@ -962,11 +962,19 @@
         position: relative;
         height: 100%;
     }
-    .COMMON_TABS{
-        border: none!important;
+
+    .COMMON_TABS {
+        border: none !important;
     }
-    .COMMON_TABS >>> .md-tab-bar-ink{
+
+    .COMMON_TABS >>> .md-tab-bar-ink {
+        width: 100% !important;
         background: #ccc;
         height: .01rem;
+    }
+
+    .COMMON_TABS >>> .md-tab-bar-item {
+        width: 100%;
+        text-align: center;
     }
 </style>
