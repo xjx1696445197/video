@@ -279,28 +279,28 @@
                 lastMonthEndDate: null,     // 上个月的最后一天是几号
                 list: [],   // 日历的二维数组
                 years: [],  // 1900-2100
-                months: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+                months: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
                 defaultDatetime: new Date(),
-                integralmsg:16,
-                integralstro:16,
-                isShowCalendar:false,
+                integralmsg: 16,
+                integralstro: 16,
+                isShowCalendar: false,
                 systemDate: '',
                 msg: 0,
                 userdata: [],
                 creditsInput: '',
-                creditsOutput:'',
-                loadTag: true,
-                loadTagtwo:true,
-                curPage:0,//当前页码
-                curPagetwo:1,//当前页码
-                loadTxt:'',
-                loadTxttwo:'',
-                currency:"credits",
-                userinfo:JSON.parse(localStorage.getItem('userinfo')),
-                allvin:"",
-                vin:"",
-                vout:"",
-                allvout:"",
+                creditsOutput: '',
+                loadTag: false,
+                loadTagtwo: false,
+                curPage: 0,//当前页码
+                curPagetwo: 1,//当前页码
+                loadTxt: '',
+                loadTxttwo: '',
+                currency: "credits",
+                userinfo: JSON.parse(localStorage.getItem('userinfo')),
+                allvin: "",
+                vin: "",
+                vout: "",
+                allvout: "",
                 allvouttext:"兑换",
                 allvintext:"获得",
                 tipsVisible: false,
@@ -641,20 +641,20 @@
                 this.$router.back(-1)
             },
             loadMore: function () {
-                var that=this;
-                if (that.msg==0) {
-                    console.log("loadTag")
-                    if (this.loadTag) {
+                var that = this;
+                // if (that.msg==0) {
+                // console.log("loadTag")
+                if (this.loadTag) {
 
-                        this.doQuery();
-                    }
-                }else {
-                    console.log("loadTagtwo")
-                    if (this.loadTagtwo) {
-
-                        this.doQuery();
-                    }
+                    this.doQuery();
                 }
+                // }else {
+                //     // console.log("loadTagtwo")
+                //     if (this.loadTagtwo) {
+                //
+                //         this.doQuery();
+                //     }
+                // }
 
             },
             getCredits:function(){
@@ -707,7 +707,6 @@
             },
             doQuery: function () {
                 var that = this;
-                that.loadTag = true;
                 that.loadTagtwo = true;
                     that.curPage++;
                 that.loadTxt='加载中...'
@@ -728,15 +727,27 @@
                     that.allvout = result.resultData.allVout
                     that.vin = result.resultData.vin
                     that.vout = result.resultData.vout
-                    var allProducts = [];
+                    if (that.userdata == "") {
+                        that.userdata = result.resultData.list
+                        // console.log(typeof (that.userdata) == typeof (result.resultData.list))
 
-                    allProducts = allProducts.concat(that.userdata, result.resultData.list);
-                    that.userdata = allProducts
-                    console.log(that.userdata)
-                    if (result.resultData.list == []) {
+                    } else {
+
+                        // setTimeout(function () {
+                        //     var allProducts = "";
+                        //     allProducts =
+                        // console.log(allProducts)
+                        that.userdata = that.userdata.concat(result.resultData.list);
+                        // console.log(that.userdata)
+                        // },1000)
+                    }
+
+
+                    if (result.resultData.list == "") {
                         that.loadTag = false;
                         that.loadTxt = '没有更多数据'
                     } else {
+                        that.loadTag = true;
                         that.loadTxt = '加载完成'
                     }
 

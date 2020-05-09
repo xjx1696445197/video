@@ -12,7 +12,7 @@ function checkCustomerUrl(resq_url, params) {
         //商城用户的token发送到服务端
         let customerInfo = JSON.parse(localStorage.getItem("userinfo"));
         let customerToken = customerInfo.customerToken;
-        console.log(customerToken)
+        // console.log(customerToken)
         if (customerToken == null || customerToken == undefined) {
             customerToken = "";
         } else {
