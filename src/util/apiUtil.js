@@ -4,15 +4,15 @@
  */
 // var api_root = 'http://192.168.3.95:8184';//测试调试
 // var api_rootimg = 'http://192.168.3.95:8184';//测试调试
-// var api_root = 'http://39.106.90.111:8184';//测试调试
-// var api_rootimg = 'http://39.106.90.111:8184';//测试调试
+var api_root = 'http://39.106.90.111:8184';//测试调试
+var api_rootimg = 'http://39.106.90.111:8184';//测试调试
 //
-var api_root = 'http://chmcapi.chmc.top';//正式调试
-var api_rootimg = 'http://chmcserver.chmc.top';//正式调试
+// var api_root = 'http://chmcapi.chmc.top';//正式调试
+// var api_rootimg = 'http://chmcserver.chmc.top';//正式调试
 //内置图片资源路径
 var inner_img_root = api_rootimg + "/resource";
 //上传图片资源路径
-var upload_img_root = api_rootimg ;
+var upload_img_root = api_rootimg;
 // var upload_img_root= api_root+"/images/b2b2c_ssm";//本地调试1
 
 var urlUtil = urlUtil || {};
