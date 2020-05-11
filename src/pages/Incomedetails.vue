@@ -720,7 +720,6 @@
                                 path: '/login'
                             })
                         }, 1000)
-
                         return
                     }
                     that.allvin = result.resultData.allVin

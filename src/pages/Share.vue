@@ -71,15 +71,22 @@
                 <div class="actionSheet_container">
                     <div class="actionSheet_list">
                         <div class="actionSheet_item"
-                            v-for="(item, index) in buttons"
+                             v-for="(item, index) in buttons"
                              @click="selectActionSheet(index)"
                         >
                             <div class="actionSheet_item_icon"
-                                :style="{'background':`url(${item.icon}) no-repeat center center / cover`}"
+                                 :style="{'background':`url(${item.icon}) no-repeat center center / cover`}"
                             ></div>
                             <p class="actionSheet_item_txt1">{{item.title}}</p>
                         </div>
-
+                        <div @click="selectActionqq(0)"
+                             class="actionSheet_item"
+                        >
+                            <div :style="{'background':`url(${buttnqq.icon}) no-repeat center center / cover`}"
+                                 class="actionSheet_item_icon"
+                            ></div>
+                            <p class="actionSheet_item_txt1">{{buttnqq.title}}</p>
+                        </div>
 
                     </div>
                 </div>
@@ -95,6 +102,7 @@
 
     import icon001 from 'static/images/action_icon001.png'
     import icon002 from 'static/images/action_icon002.png'
+    import icon003 from 'static/images/QQ.png'
     import urlUtil from '../util/apiUtil.js'
     import jsonAjax from '../util/restUtil.js'
     import { mapGetters } from 'vuex'
@@ -117,7 +125,16 @@
                 dtask: '',
                 FILENAME: '',
                 shareWX: null,
-                userId:JSON.parse(localStorage.getItem('userinfo')),
+                userId: JSON.parse(localStorage.getItem('userinfo')),
+                buttnqq: {
+                    title: "QQ",
+                    // extra:{
+                    //     scene:'qq'
+                    // },
+                    icon: icon003
+                },
+                shareqq: null,
+                msgqq: {type: 'image'}
                 // buttons: [
                 //     {
                 //         title: '微信好友',
@@ -258,6 +275,7 @@
                         this.saveToGallery()
                     } else if( flag = 'share' ){
                         this.shareToWX()
+                        this.shareToqq()
                     }
                 }
 
@@ -284,15 +302,20 @@
                 })
             },
             // 分享到微信
-            shareToWX(){
+            shareToWX() {
                 // 先去获取微信分享服务
                 this.getWXSerivce()
             },
+            // 分享到qq
+            shareToqq() {
+                // 先去获取qq分享服务
+                this.getqqSerivce()
+            },
             // 获取分享服务
-            getWXSerivce(){
+            getWXSerivce() {
                 plus.share.getServices((services) => {
                     let sharesList = {}
-                    for(let i in services){
+                    for (let i in services) {
                         const service = services[i]
                         sharesList[service.id] = service
                     }
@@ -302,14 +325,28 @@
                     // 唤起actionSheet
                     this.actionSheet()
                 }, (e) => {
-                    this.showTips(this.shareTip7+ e.message)
+                    this.showTips(this.shareTip7 + e.message)
                 })
             },
+            // 获取qq分享服务
+            getqqSerivce() {
+                var that = this;
+                plus.share.getServices(function (s) {
+                    let shares = {};
+                    for (var i in s) {
+                        var t = s[i];
+                        shares[t.id] = t;
+                    }
+                    that.shareqq = shares['qq'];
+                    that.actionSheet()
+
+                }, function (e) {
+                    this.showTips('获取分享服务列表失败：' + e.message);
+                });
+            },
             // 唤起actionSheet
-            actionSheet(){
-
-
-                if( this.shareWX ){
+            actionSheet() {
+                if (this.shareWX) {
                     // 如果有微信服务就唤起actionSheet
                     this.showActionSheet()
                 } else {
@@ -342,28 +379,64 @@
                 }
             },
             // 真正的去分享
-            goToShare(params){
+            goToShare(params) {
                 this.shareWX.send(params, () => {
                     this.closeActionSheet()
                 }, (e) => {
                     plus.nativeUI.alert(this.shareTip10)
                 })
             },
+            // 真正的去分享QQ
+            goToqqShare(a, params) {
+                console.log(params.pictures)
+                this.shareqq.send(params, () => {
+                    this.closeActionSheet()
+                }, (e) => {
+                    plus.nativeUI.alert(this.shareTip10)
+                })
+            },
             // 选择ActionSheet
-            selectActionSheet(index){
-                const params = { type:'image', pictures: [this.FILENAME] }
+            selectActionSheet(index) {
+                const params = {type: 'image', pictures: [this.FILENAME]}
                 this.validShareAuth(params, this.buttons[index])
             },
+            // 选择ActionSheet
+            selectActionqq(index) {
+                const params = {type: 'image', pictures: [this.FILENAME]}
+                this.validqqShareAuth(params, this.buttons[index])
+            },
+            validqqShareAuth(params, button) {
+                var that = this;
+                // that.showTips('分享操作：');
+                // this.msg.pictures=[image_picture.realUrl];
+                if (!that.shareqq) {
+                    that.showTips('无效的分享服务！');
+                    return;
+                }
+                // button&&(msg.extra=button.extra);
+                // 发送分享
+                if (that.shareqq.authenticated) {
+                    that.showTips('---已授权---');
+                    that.goToqqShare(that.shareqq, params);
+                } else {
+                    // that.showTips('---未授权---');
+                    that.shareqq.authorize(function () {
+                        that.goToqqShare(that.shareqq, params);
+                    }, function (e) {
+                        that.showTips('认证授权失败：' + JSON.stringify(e));
+                    });
+                }
+            },
             // 监听actionSheet关闭
-            actionSheetClosed(){
+            actionSheetClosed() {
                 this.actionSheetVisible = false
             },
             // 打开actionSheet
-            showActionSheet(){
+            showActionSheet() {
                 this.actionSheetVisible = true
             },
             // 关闭actionSheet
-            closeActionSheet(){
+            closeActionSheet() {
                 this.actionSheetVisible = false
             },
             // 打开消息提示
