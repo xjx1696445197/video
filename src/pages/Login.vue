@@ -331,6 +331,8 @@
                             localStorage.setItem('certification', result.resultData.certification)
                             // 设置消息状态
 //                          this.setUserNoticeState()
+
+
                             // 保存用户信息
                             that.setUserinfo({
                                 ...userinfo,
@@ -353,63 +355,7 @@
                     }, 300)
 
                 })
-                return
-                this.$http.post("http://39.106.90.111:8184/app/login/customerLogin", {
-                    loginType:1,
-                    phone: username,
-                    password: password,
-//                  api_key:'custom'
-//                  __HEADERSAUTH: true
-                }).then((res) => {
-                    console.log(res)
-                    const { data } = res
 
-                    // 关闭加载层
-                    this.closeLoading()
-
-                    setTimeout(() => {
-                        if( data.success ){
-                            const userinfo = data.result
-                            const { token } = res.headers
-
-                            // 设置消息状态
-                            this.setUserNoticeState()
-                            // 保存用户信息
-                            this.setUserinfo({
-                                ...userinfo,
-                                token
-                            })
-                            // 保存用户名
-                            this.setUsers(userinfo.userName)
-
-                            // 设置侧边栏数据
-                            if(JSON.stringify(this.Sidebars).indexOf(JSON.stringify(userinfo.userName)) === -1 || this.Sidebars.length == 0){
-                                // 设置
-                                this.setSidebars({
-                                    username:userinfo.userName,
-                                    active:true
-                                })
-                            }else{
-                                // 无需设置
-                                this.Sidebars.forEach((item, i)=>{
-                                    if(item.username == userinfo.userName){
-                                        item.active = true
-                                    }else{
-                                        item.active = false
-                                    }
-                                })
-                            }
-
-
-                            this.loginSuccess = true
-                            this.showTips(data.message, false)
-                        } else {
-                            this.showTips(data.message)
-                            this.captchaCode = ''
-                        }
-                    }, 300)
-
-                })
             },
             // 打开消息提示
             showTips(msg, refresh=true){

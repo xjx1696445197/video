@@ -589,6 +589,9 @@
             customerToken() {
                 return this.userinfo.customerToken
             },
+            transPass() {
+                return this.transPass
+            },
             Sidebars() {
                 return this.getSidebars()
             },
@@ -597,8 +600,10 @@
             return parseFloat(num)
         },
         created(){
+            console.log(this.transPass)
             this.transPass=JSON.parse(localStorage.getItem('transPass'))
             if(JSON.parse(localStorage.getItem('userinfo'))==undefined){
+
                 this.$push({
                     path: '/login'
                 })
@@ -1419,39 +1424,39 @@
     }
     .shop_walletIcon{
         background: url("../static/images/video_icon/icon_money.png") no-repeat center center /cover;
-        height: 0.4rem;
-        width: 0.4rem;
-        margin-top: 0.3rem;
+        height: 0.5rem;
+        width: 0.5rem;
+        margin-top: 0.25rem;
     }
     .shop_receivedIcon{
         background: url("../static/images/video_icon/icon_receive.png") no-repeat center center /cover;
-        height: 0.4rem;
-        width: 0.4rem;
-        margin-top: 0.3rem;
+        height: 0.5rem;
+        width: 0.5rem;
+        margin-top: 0.25rem;
     }
     .shop_shareIcon{
         background: url("../static/images/video_icon/icon_share.png") no-repeat center center /cover;
-        height: 0.4rem;
-        width: 0.4rem;
-        margin-top: 0.3rem;
+        height: 0.5rem;
+        width: 0.5rem;
+        margin-top: 0.25rem;
     }
     .shop_teamIcon{
         background: url("../static/images/video_icon/icon_team.png") no-repeat center center /cover;
-        height: 0.4rem;
-        width: 0.4rem;
-        margin-top: 0.3rem;
+        height: 0.5rem;
+        width: 0.5rem;
+        margin-top: 0.25rem;
     }
     .shop_feedIcon{
         background: url("../static/images/video_icon/icon_feed.png") no-repeat center center /cover;
-        height: 0.4rem;
-        width: 0.4rem;
-        margin-top: 0.3rem;
+        height: 0.5rem;
+        width: 0.5rem;
+        margin-top: 0.25rem;
     }
     .shop_mapIcon{
         background: url("../static/images/video_icon/icon_dl.png") no-repeat center center /cover;
-        height: 0.4rem;
-        width: 0.4rem;
-        margin-top: 0.3rem;
+        height: 0.5rem;
+        width: 0.5rem;
+        margin-top: 0.25rem;
     }
     .shop_orderBottom{
         padding: 0.2rem 0;

@@ -42,18 +42,19 @@
         display: table; table-layout: fixed;
     }
     .common_tabbar_item{
-        padding-top: 0.1rem; padding-bottom: 0.1rem;
+        padding-top: 0.1rem;
+        /*padding-bottom: 0.1rem;*/
         display: table-cell;
     }
     .common_tabbar_item_icon {
-        width: 0.6rem;
-        height: 0.6rem;
+        width: 0.5rem;
+        height: 0.5rem;
         margin: 0 auto;
     }
     .common_tabbar_item_txt {
         font-size: 0.2rem;
         color: #666;
-        line-height: 0.3rem;
+        line-height: 0.45rem;
         background: none;
     }
     .common_tabbar_item_icon.common_tabbar_item_icon001 {
