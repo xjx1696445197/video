@@ -607,28 +607,28 @@
                 this.$push({
                     path: '/login'
                 })
-            }else {
+            } else {
 
             }
-            var that=this
-            jsonAjax.get(urlUtil.getApiUrl("findUserNews"), {userId:that.userIdtwo.customerId}, function (result) {
-                that.namesss=result.resultData.nickName
-                that.personAdNum=result.resultData.personAdNum
+            var that = this
+            jsonAjax.get(urlUtil.getApiUrl("findUserNews"), {userId: that.userIdtwo.customerId}, function (result) {
+                that.namesss = result.resultData.nickName
+                that.personAdNum = result.resultData.personAdNum
             });
-            jsonAjax.get(urlUtil.getApiUrl("tokenIsOut"), {userPhone:that.userIdtwo.phone}, function (result) {
-                if(result.result){
-                    that.showTips('登录超时请重新登录')
-                    localStorage.removeItem('userinfo')
-                    setTimeout(function() {
-                            that.$router.replace({
-                                path: '/login'
-                            })
-                        },
-                        600);
-                }else {
-
-                }
-            });
+            // jsonAjax.get(urlUtil.getApiUrl("tokenIsOut"), {userPhone:that.userIdtwo.phone}, function (result) {
+            //     if(result.result){
+            //         that.showTips('登录超时请重新登录')
+            //         localStorage.removeItem('userinfo')
+            //         setTimeout(function() {
+            //                 that.$router.replace({
+            //                     path: '/login'
+            //                 })
+            //             },
+            //             600);
+            //     }else {
+            //
+            //     }
+            // });
 
         },
         methods: {

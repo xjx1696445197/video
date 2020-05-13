@@ -12,7 +12,7 @@
             <div class="common_tabbar_item_icon common_tabbar_item_icon003"></div>
             <p class="common_tabbar_item_txt">商城</p>
         </router-link>
-        <router-link replace tag="div" class="common_tabbar_item" to="/news">
+        <router-link class="common_tabbar_item" replace tag="div" to="/otc">
             <div class="common_tabbar_item_icon common_tabbar_item_icon004"></div>
             <p class="common_tabbar_item_txt">OTC</p>
         </router-link>

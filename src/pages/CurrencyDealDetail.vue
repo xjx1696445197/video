@@ -245,8 +245,8 @@
                     customerToken: this.customerToken
                 }).then((res) => {
                     console.log(res)
-                    if( res.success ){
-                        this.detail = res.result
+                    if (res.returnCode) {
+                        this.detail = res.resultData
                     }
                 })
 

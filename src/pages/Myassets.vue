@@ -33,15 +33,15 @@
             <div class="bottom">
                 <div class="bottom_title">我的资产</div>
                 <div class="bottom_list">
-                    <div class="bottom_item clearfix" @click='toCurrencyDetail' data-currency="CHMC">
+                    <div @click='toCurrencyDetail("CHMC")' class="bottom_item clearfix" data-currency="CHMC">
                         <div class="bottom_txt1 fl"><img src="../static/images/start-up.png"><span>CHMC</span></div>
                         <div class="bottom_icon fr"></div>
                     </div>
-                    <div class="bottom_item clearfix" @click='toCurrencyDetail' data-currency="HALE">
+                    <div @click='toCurrencyDetail("HALE")' class="bottom_item clearfix" data-currency="">
                         <div class="bottom_txt1 fl"><img src="../static/images/shop/HALE.png"><span>HALE</span></div>
                         <div class="bottom_icon fr"></div>
                     </div>
-                    <div class="bottom_item clearfix" @click='toIntegralDetail'>
+                    <div @click='toIntegralDetail()' class="bottom_item clearfix">
                         <div class="bottom_txt1 fl"><img src="../static/images/jifen.jpg"><span>积分</span></div>
                         <div class="bottom_icon fr"></div>
                     </div>
@@ -95,15 +95,15 @@
                 })
             },
             // 去项目币详情页面
-            toCurrencyDetail(event){
-                console.log(event)
-                const { currency } = event.target.dataset
-                console.log(currency)
+            toCurrencyDetail(event) {
+                // console.log(event)
+                // const { currency } = event.target.dataset
+                // console.log(currency)
 //          	return
                 this.$push({
                     path: '/currencyDetail',
                     query: {
-                        currencyName: currency
+                        currencyName: event
                     }
 
                 })

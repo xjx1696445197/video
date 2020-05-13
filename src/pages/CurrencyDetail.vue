@@ -450,10 +450,10 @@
                 }, function (result) {
                     console.log(result)
 //              	return
-                    if (result.success) {
-                        that.detail = result.result.data
-                        console.log(result.result.data.address)
-                        that.initCopyer(result.result.data.address)
+                    if (result.returnCode) {
+                        that.detail = result.resultData.data
+                        console.log(result.resultData.data.address)
+                        that.initCopyer(result.resultData.data.address)
 //              		that.amount = result.result.vip1Number
                     }
                 })

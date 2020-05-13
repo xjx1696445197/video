@@ -237,10 +237,10 @@
                     currency: 'HALE'
                 }, function (result) {
                     console.log(result)
-                    if (result.success) {
+                    if (result.returnCode) {
                         that.detail = {
-                            ...result.result.data,
-                            tip: result.result.tip
+                            ...result.resultData.data,
+                            tip: result.resultData.tip
                         }
                         console.log(that.detail)
                         that.initCopyer(that.detail.address)
@@ -262,23 +262,23 @@
 //              	}
                 })
                 return
-                this.$http.post('http://39.106.90.111:8184/app/wallet/userWallet/findAmountByCurrency', {
-                    userId: 2,
-                    currency: 'HALE'
-                }).then((res) => {
-                    console.log(res)
-                    if( res.success ){
-                        this.detail = {
-                            ...res.result.data,
-                            tip: res.result.tip
-                        }
-
-                        this.initCopyer(this.detail.address)
-                        if( refresh ){
-                            this.showTips(this.shareTip11)
-                        }
-                    }
-                })
+                // this.$http.post('/app/wallet/userWallet/findAmountByCurrency', {
+                //     userId: 2,
+                //     currency: 'HALE'
+                // }).then((res) => {
+                //     console.log(res)
+                //     if( res.returnCode ){
+                //         this.detail = {
+                //             ...res.resultData.data,
+                //             tip: res.resultData.tip
+                //         }
+                //
+                //         this.initCopyer(this.detail.address)
+                //         if( refresh ){
+                //             this.showTips(this.shareTip11)
+                //         }
+                //     }
+                // })
             },
             // 下载分享图片
             downloadPic(flag){

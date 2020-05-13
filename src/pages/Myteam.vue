@@ -191,8 +191,8 @@
         created() {
             var that=this
             jsonAjax.post(urlUtil.getApiUrl("getUserTeamDirectInfo"), {userId:that.userId}, function (result) {
-                that.userdatalist=result.result
-                that.loadingnuber=that.loadingnuber+1
+                that.userdatalist = result.resultData
+                that.loadingnuber = that.loadingnuber + 1
                 if(that.loadingnuber==2){
                     that.loadingVisible=false;
                 }

@@ -214,7 +214,7 @@
                     problemOpinion: that.formData.content,
                     customerToken: that.customerToken
                 }, function (result) {
-                    if (result.success) {
+                    if (result.returnCode) {
                         that.showTips(result.message)
                         that.formData.name = ''
                         that.formData.tel = ''

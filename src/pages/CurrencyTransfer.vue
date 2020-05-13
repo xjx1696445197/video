@@ -440,23 +440,22 @@
                 }, function (result) {
                     console.log(result)
 //              	return
-                    if( result.success ){
+                    if (result.returnCode) {
                         that.detail = {
-                            ...result.result.data,
-                            tip: result.result.tip,
-                            fee:result.result.fee,
-                            max:result.result.max,
-                            min:result.result.min,
-                            withdrawMoney:result.result.withdrawMoney
+                            ...result.resultData.data,
+                            tip: result.resultData.tip,
+                            fee: result.resultData.fee,
+                            max: result.resultData.max,
+                            min: result.resultData.min,
+                            withdrawMoney: result.resultData.withdrawMoney
                         }
-
 
 
                         console.log(that.detail)
                         that.initCopyer(that.detail.address)
-                        if( refresh ){
-                            that.showTips(that.shareTip11)
-                        }
+                        // if( refresh ){
+                        //     that.showTips(that.shareTip11)
+                        // }
                     }else{
                         that.showTips(result.message)
                         // 跳转到我的页面

@@ -348,13 +348,13 @@
                 userId: that.$store.state.userinfo.userId,
                 currency: that.tabIndextwo
             }, function (result) {
-                that.balance = result.result.amount
-                that.proportion = result.result.price
+                that.balance = result.resultData.amount
+                that.proportion = result.resultData.price
 
             })
             jsonAjax.get(urlUtil.getApiUrl('getexchangenum'), {}, function (result) {
-                that.mingetintegral=result.result.minExchangeNum
-                that.maxgetintegral=result.result.maxExchangeNum
+                that.mingetintegral = result.resultData.minExchangeNum
+                that.maxgetintegral = result.resultData.maxExchangeNum
                 // that.creditsExchangeGear = eval("(" +  result.result.creditsExchangeGear  + ")" )
 
             })
@@ -504,8 +504,8 @@
                     userId: that.$store.state.userinfo.userId,
                     currency: that.currencytwo
                 }, function (result) {
-                    that.balance = result.result.amount
-                    that.proportion = result.result.price
+                    that.balance = result.resultData.amount
+                    that.proportion = result.resultData.price
                 })
                 this.balance = this.balancetwo//余额
                 this.proportion = this.proportiontwo//兑换积分比例
@@ -579,11 +579,11 @@
                                 userId: that.$store.state.userinfo.userId,
                                 currency: that.currencytwo
                             }, function (result) {
-                                that.balance = result.result.amount
-                                that.proportion = result.result.price
-                                that.toexchange=''
-                                that.getintegral=''
-                                that.sfxstwo=''
+                                that.balance = result.resultData.amount
+                                that.proportion = result.resultData.price
+                                that.toexchange = ''
+                                that.getintegral = ''
+                                that.sfxstwo = ''
 
                             })
                         })
@@ -626,10 +626,10 @@
                 }, function (result) {
                     console.log(result)
 //              	return
-                    if (result.success) {
-                        that.detail = result.result
-                        that.amountstore = result.result.circulationRate
-                        that.amountstore1 = 1 - result.result.circulationRate
+                    if (result.returnCode) {
+                        that.detail = result.resultData
+                        that.amountstore = result.resultData.circulationRate
+                        that.amountstore1 = 1 - result.resultData.circulationRate
 
 //              		that.amount = result.result.vip1Number
                     } else {

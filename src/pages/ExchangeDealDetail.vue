@@ -246,8 +246,8 @@
                 }).then((res) => {
                     console.log(res)
 //                  return
-                    if( res.success ){
-                        this.detail = res.result
+                    if (res.returnCode) {
+                        this.detail = res.resultData
                     }
                 })
 
