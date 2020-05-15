@@ -8,21 +8,38 @@
             <div class="wrapper_height">
                 <p class="realName_txt1 tcenter">刷脸认证</p>
                 <p class="realName_txt2 tcenter">请确保是 <span style="color: red">{{Name}}</span> 本人</p>
-                <p class="realName_txt4 tcenter">请点击头像框进行刷脸拍照验证！</p>
-                <div class="bg_icon mauto"
-                    @click="toPick"
-                     v-if="src==''"
-                ></div>
-                <div class="bg_img mauto" v-if="src!=''"
-                     @click="toPick"
-                >
-                    <img :src="src" alt="" class="">
+                <p class="realName_txt4 tcenter">请点击头像框进行上传图片验证！</p>
+                <!--                <div class="bg_icon mauto"-->
+                <!--                     @click="toPick"-->
+                <!--                     v-if="src==''"-->
+                <!--                ></div>-->
+                <!--                <div class="bg_img mauto" v-if="src!=''"-->
+                <!--                     @click="toPick"-->
+                <!--                >-->
+                <!--                    <img :src="src" alt="" class="">-->
+                <!--                </div>-->
+
+                <div :class="{camera_outer:true}" id="camera_outer">
+                    <div class="img_group">
+                        <div class="img_box" v-if="allowAddImg">
+                            <input @change="changeImg($event)" accept="image/*" multiple="multiple" type="file">
+                            <div class="filter"></div>
+                        </div>
+                        <div :key="index" class="img_boximg" v-for="(item,index) in imgArr">
+                            <div class="img_show_box">
+                                <img :src="item" alt="">
+                                <i @click="deleteImg(index)" class="img_delete"></i>
+                                <!-- <i class="img_delete" @click="imgArr.splice(index,1)"></i> -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <p class="realName_txt3 tcenter" v-if="src==''">平视手机 正对光源</p>
+                <!--                <p class="realName_txt3 tcenter" v-if="src==''">平视手机 正对光源</p>-->
                 <div class="button LONGBTN BUTTON_SHADOW"
-                    @click="uploadFaceImage"
-                >开始验证</div>
+                     @click="uploadFaceImage"
+                >开始验证
+                </div>
             </div>
         </div>
 
@@ -80,24 +97,30 @@
 
 <script>
     import Nlayer from '@/components/Nlayer'
-    import { mapGetters } from 'vuex'
-    import { baseURL } from '@/config'
+    import {mapGetters} from 'vuex'
+    import {baseURL} from '@/config'
+    import urlUtil from '../util/apiUtil.js'
+    import jsonAjax from '../util/restUtil.js'
 
     export default {
         name: "BrushFaceAuthen",
         components: {
             Nlayer
         },
-        data () {
+        data() {
             return {
-                src:'',
-                srcc:'',
+                src: '',
+                srcc: '',
                 tips: '',
-                tipsError:'',
+                tipsError: '',
                 tipsVisible: false,
                 loadingVisible: false,
                 baseURL,
-                realAuthenErrorDig:false
+                realAuthenErrorDig: false,
+                imgData: '',
+                imgArr: [],
+                imgSrc: '',
+                allowAddImg: true,
             }
         },
         mounted(){
@@ -121,105 +144,213 @@
         methods: {
             ...mapGetters(['getUserinfo']),
             // 检测
-            checkFace(){
-                if(!this.src){
+            checkFace() {
+                if (!this.src) {
                     this.showTips('点击图片拍照')
                     return false
                 }
                 return true
             },
+            changeImg: function (e) {
+                var _this = this;
+                // console.log(e)
+                var imgLimit = 1024;
+                var files = e.target.files;
+                // let obj = new FileReader();
+                // obj.readAsDataURL(files)
+                // console.log(files)
+                var image = new Image();
+                if (files.length > 0) {
+                    var dd = 0;
+                    var timer = setInterval(function () {
+                        if (files.item(dd).type != 'image/png' && files.item(dd).type != 'image/jpeg' && files.item(dd).type != 'image/gif') {
+                            return false;
+                        }
+
+                        if (files.item(dd).size > imgLimit * 102400) {
+                            //to do sth
+                        } else {
+                            image.src = window.URL.createObjectURL(files.item(dd));
+                            image.onload = function () {
+                                // 默认按比例压缩
+                                var w = image.width,
+                                    h = image.height,
+                                    scale = w / h;
+                                w = 300;
+                                h = w / scale;
+                                // 默认图片质量为0.7，quality值越小，所绘制出的图像越模糊
+                                var quality = 1.5;
+                                //生成canvas
+                                var canvas = document.createElement('canvas');
+                                var ctx = canvas.getContext('2d');
+                                // 创建属性节点
+                                var anw = document.createAttribute("width");
+                                anw.nodeValue = w;
+                                var anh = document.createAttribute("height");
+                                anh.nodeValue = h;
+                                canvas.setAttributeNode(anw);
+                                canvas.setAttributeNode(anh);
+                                ctx.drawImage(image, 0, 0, w, h);
+                                var ext = image.src.substring(image.src.lastIndexOf(".") + 1).toLowerCase();//图片格式
+                                var base64 = canvas.toDataURL("image/" + ext, quality);
+                                _this.src = base64
+                                // 回调函数返回base64的值
+                                if (_this.imgArr.length <= 4) {
+                                    _this.imgArr.unshift('');
+                                    _this.imgArr.splice(0, 1, base64);//替换数组数据的方法，此处不能使用：this.imgArr[index] = url;
+                                    if (_this.imgArr.length >= 5) {
+                                        _this.allowAddImg = false;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (dd < files.length - 1) {
+                            dd++;
+                        } else {
+                            clearInterval(timer);
+                        }
+                    }, 1000)
+                }
+            },
+            deleteImg: function (index) {
+                this.imgArr.splice(index, 1);
+                if (this.imgArr.length < 5) {
+                    this.allowAddImg = true;
+                }
+            }
+            ,
             // 上传人脸正面照
-            uploadFaceImage(){
-                console.log(this.baseURL)
-                console.log('开始验证')
-                if(!this.checkFace()){
+            uploadFaceImage() {
+                // console.log(this.baseURL)
+                // console.log('开始验证')
+                if (!this.checkFace()) {
                     return
                 }
 
                 // 打开加载中
                 this.showLoading()
+                // var url = this.baseURL + 'app/auth/personVerify'
+                // var data = [
+                //     {
+                //         type: 'string',
+                //         name: 'image',
+                //         value: this.src
+                //     },
+                //     {
+                //         type: 'string',
+                //         name: 'imageType',
+                //         value: 'BASE64'
+                //     },
+                //     {
+                //         type: 'string',
+                //         name: 'userId',
+                //         value: this.userId.toString()
+                //     },
+                //     {
+                //         type: 'string',
+                //         name: 'customerToken',
+                //         value: this.customerToken
+                //     }
+                // ]
+                var that = this
+                jsonAjax.post(urlUtil.getApiUrl("personVerifes"), {
+                    image: this.src,
+                    imageType: 'BASE64',
+                    userId: this.userId.toString(),
+                    customerToken: this.customerToken
+                }, function (result, state) {
+                    that.closeLoading()
+                    // console.log(JSON.stringify(data))
+                    // console.log(state)
+                    // if( state == '200' ){
+                    //     var result = JSON.parse(result.responseText)
 
-                var url = this.baseURL + 'app/auth/personVerify'
-                var data = [
-                    {
-                        type: 'file',
-                        name: 'image',
-                        value: this.src
-                    },
-                    {
-                        type: 'string',
-                        name: 'imageType',
-                        value: 'BASE64'
-                    },
-                    {
-                        type: 'string',
-                        name: 'userId',
-                        value: this.userId.toString()
-                    },
-                    {
-                        type: 'string',
-                        name: 'customerToken',
-                        value: this.customerToken
+                    if (result.returnCode == 1) {
+                        that.showTips(result.message)
+                        // this.$push({
+                        //     path: '/finishAuthen'
+                        // })
+                        localStorage.setItem("certification", 1);
+                        that.$router.replace({
+                            path: '/finishAuthen',
+                            query: {
+                                showCode: 1
+                            }
+                        })
+                    } else {
+                        console.log(result.message)
+                        that.openRealAuthenErrorDig(result.message)
                     }
-                ]
-
-                this.upload(url, 'post', data, (res, state) => {
-                    this.closeLoading()
-                    console.log(JSON.stringify(data))
-                    console.log(state)
-                    if( state == '200' ){
-                        var result = JSON.parse(res.responseText)
-
-                        if(result.returnCode == 1){
-                            this.showTips(result.message)
-                            // this.$push({
-                            //     path: '/finishAuthen'
-                            // })
-                            localStorage.setItem("certification",1);
-                            this.$router.replace({
-                                path: '/finishAuthen',
-                                query: {
-                                    showCode:1
-                                }
-                            })
-                        }else{
-                        	console.log(result.message)
-                            this.openRealAuthenErrorDig(result.message)
-                        }
-                    }else{
-                        this.showTips('当前通道拥挤，请稍后再试')
-                    }
+                    // }
+                    // else{
+                    //     that.showTips('当前通道拥挤，请稍后再试')
+                    // }
+//                     console.log(result)
+// //              	return
+//                     if( result.returnCode ){
+//                         that.amount = result.resultData.data.amount
+//                         that.detail = result.resultData.data
+// //              		that.amount = result.result.vip1Number
+//                     }
                 })
+                // this.upload(url, 'post', data, (res, state) => {
+                //     this.closeLoading()
+                //     console.log(JSON.stringify(data))
+                //     console.log(state)
+                //     if( state == '200' ){
+                //         var result = JSON.parse(res.responseText)
+                //
+                //         if(result.returnCode == 1){
+                //             this.showTips(result.message)
+                //             // this.$push({
+                //             //     path: '/finishAuthen'
+                //             // })
+                //             localStorage.setItem("certification",1);
+                //             this.$router.replace({
+                //                 path: '/finishAuthen',
+                //                 query: {
+                //                     showCode:1
+                //                 }
+                //             })
+                //         }else{
+                //             console.log(result.message)
+                //             this.openRealAuthenErrorDig(result.message)
+                //         }
+                //     }else{
+                //         this.showTips('当前通道拥挤，请稍后再试')
+                //     }
+                // })
             },
             // 上传文件公共方法
-             upload(url, method, data, callback){
-                var task = plus.uploader.createUpload(url, {
-                    method: method
-                }, (res, state) => {
-                    callback(res, state)
-                })
-
-
-                for( var i=0; i<data.length; i++ ){
-                    var item = data[i]
-
-                    if( item.type === 'file' ){
-                        task.addFile(item.value, {key: item.name})
-                    } else if( item.type === 'string' ){
-                        task.addData(item.name, item.value)
-                    }
-                }
-
-                task.start()
-            },
-            toPick(){
-                if (window.plus){
+            // upload(url, method, data, callback){
+            //     var task = plus.uploader.createUpload(url, {
+            //         method: method
+            //     }, (res, state) => {
+            //         callback(res, state)
+            //     })
+            //
+            //
+            //     for( var i=0; i<data.length; i++ ){
+            //         var item = data[i]
+            //
+            //         if( item.type === 'file' ){
+            //             task.addFile(item.value, {key: item.name})
+            //         } else if( item.type === 'string' ){
+            //             task.addData(item.name, item.value)
+            //         }
+            //     }
+            //
+            //     task.start()
+            // },
+            toPick() {
+                if (window.plus) {
                     var cmr = plus.camera.getCamera()
                     cmr.captureImage((path) => {
                         plus.io.resolveLocalFileSystemURL(path, (entry) => {
                             var path = entry.toLocalURL()
 
-                            this.resize(path, (src)=>{
+                            this.resize(path, (src) => {
                                 this.setPath('src', src)
                             })
 
@@ -245,17 +376,17 @@
                 var filename = src.substring(src.lastIndexOf('/') + 1);
 
                 plus.zip.compressImage({
-                    src: src,
-                    dst: '_doc/' + filename,
-                    overwrite: true,
-                    width: '1000px', //这里指定了宽度，同样可以修改
-                    format: 'jpg',
-                    quality: 90 //图片质量不再修改，以免失真
-                },
-                function(e) {
-                    callback(e.target);
-                },
-                function(err) {
+                        src: src,
+                        dst: '_doc/' + filename,
+                        overwrite: true,
+                        width: '1000px', //这里指定了宽度，同样可以修改
+                        format: 'jpg',
+                        quality: 90 //图片质量不再修改，以免失真
+                    },
+                    function (e) {
+                        callback(e.target);
+                    },
+                    function (err) {
 
                     })
             },
@@ -285,7 +416,7 @@
             },
             // 打开错误提示弹窗
             openRealAuthenErrorDig(msg){
-            	this.tipsError = msg
+                this.tipsError = msg
                 this.realAuthenErrorDig = true
             },
             // 监听错误弹窗事件
@@ -343,8 +474,8 @@
         line-height: 1rem;
         margin-top: 1.1rem;
     }
-    .realName_txt4{
-    	font-size: 0.3rem;
+    .realName_txt4 {
+        font-size: 0.3rem;
         color: #E72525;
         line-height: 0.5rem;
         margin-top: 0.5rem;
@@ -359,6 +490,7 @@
         overflow: hidden;
         background: url("../static/images/video_icon/realName_icon.png") no-repeat center;
         background-size: 100%;
+        height: 6rem;
     }
     .btn_camera{
         position: absolute;
@@ -446,7 +578,8 @@
         color: #666;
         line-height: 0.45rem;
     }
-    .realAuthenBtn{
+
+    .realAuthenBtn {
         width: 3rem;
         height: 0.9rem;
         background: #203395;
@@ -457,5 +590,39 @@
         margin: 0.7rem auto 0;
     }
 
+    .img_box {
+        text-align: center;
+        padding: .5rem;
 
+    }
+
+    .img_box input {
+        opacity: 0;
+        height: 5rem;
+    }
+
+    .img_group {
+        width: 100%;
+        text-align: center;
+        position: absolute;
+        top: 0
+    }
+
+    #camera_outer {
+        position: relative;
+    }
+
+    .img_boximg {
+        position: absolute;
+        width: 6rem;
+        height: 6rem;
+        top: 0;
+        left: 50%;
+        margin-left: -3rem;
+    }
+
+    .img_boximg img {
+        width: 6rem;
+        height: 6rem;
+    }
 </style>

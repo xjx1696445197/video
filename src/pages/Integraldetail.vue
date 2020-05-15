@@ -336,9 +336,9 @@
                 }, function (result) {
                     console.log(result)
 //              	return
-                    if( result.success ){
-                        that.amount = result.result.data.amount
-                        that.detail = result.result.data
+                    if (result.returnCode) {
+                        that.amount = result.resultData.data.amount
+                        that.detail = result.resultData.data
 //              		that.amount = result.result.vip1Number
                     }
                 })

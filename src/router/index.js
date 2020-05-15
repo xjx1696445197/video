@@ -11,6 +11,7 @@ import News from 'pages/News'
 import My from 'pages/My'
 import provincialmap from 'pages/Provincialmap'
 import municipalmap from 'pages/Municipalmap'
+import cart from 'pages/cart'
 
 
 
@@ -433,6 +434,15 @@ const router =  new Router({
             path: '/map',
             name: 'map',
             component: map,
+            meta: {
+                mustLogin: true
+            }
+        },
+
+        {
+            path: '/cart',
+            name: 'cart',
+            component: cart,
             meta: {
                 mustLogin: true
             }
@@ -1129,7 +1139,7 @@ const router =  new Router({
         {
         	path: '/newFindPass',
             name: 'NewFindPass',
-            component: NewFindPass	
+            component: NewFindPass
         },
         {
             path: '/bind',

@@ -1,8 +1,8 @@
 // 测试服
 // const devRequestUrl = 'http://chmcapi.hallechain.cn/'
 // const devSourceUrl = 'http://chmcserver.hallechain.cn/js/'
-const devRequestUrl = 'http://39.106.90.111:8184/'
-const devSourceUrl = 'http://39.106.90.111:8983/js/'
+const devRequestUrl = 'http://192.168.3.95:8184/'
+const devSourceUrl = 'http://halleshoptestserver.hallechain.cn/'
 //const prodRequestUrl = 'http://120.77.247.234:8984/'
 const prodRequestUrl = 'http://chmcapi.chmc.top/'
 //const prodSourceUrl = 'http://120.77.247.234:8983/js/'

@@ -2,7 +2,7 @@
     <div class="page">
         <div class="content">
             <div class="content_title clearfix">
-                <p class="sell_txt1 fl fweight">{{$t('otc_sell.available')}}{{available_Hale | tofixed2}}HALE</p>
+                <p class="sell_txt1 fl fweight">{{$t('otc_sell.available')}}{{available_Hale | tofixed2}}CHMC</p>
                 <p class="sell_txt1 fr fweight">{{$t('otc_sell.available')}}{{available_Usdt | tofixed2}}USDT</p>
             </div>
             <div class="main">
@@ -49,14 +49,15 @@
                                 </div>
                                 <div class="sell_item_bottom clearfix">
                                     <div class="sell_bottom_left fl">
-                                        <p class="sell_txt4">{{$t('otc_sell.num')}} {{item.sellNum | tofixed2}}  HALE</p>
+                                        <p class="sell_txt4">{{$t('otc_sell.num')}} {{item.sellNum | tofixed2}} CHMC</p>
                                         <p class="sell_txt4">{{$t('otc_sell.quota')}} {{item.singleMin}}-{{item.singleMax}}  USDT</p>
                                     </div>
                                     <div class="sell_bottom_btn fr"
                                          :data-id="item.orderId"
                                          :data-price="item.amount"
                                          @click="toSellHale"
-                                    >{{$t('otc_sell.sell')}} HALE</div>
+                                    >{{$t('otc_sell.sell')}} CHMC
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -142,8 +143,8 @@
                 // }
             },
             getAvailableAmount(){
-                this.$http.get('js/hOtcListTransaction/getStaticParam', {
-                    userId:this.userinfo?this.userId:null,
+                this.$http.get('app/otcList/getStaticParam', {
+                    userId: this.userinfo ? this.userId : null,
                 }).then((res) => {
                     console.log(res)
                     if( res.success ){
@@ -156,18 +157,18 @@
             },
             // 获取用户登录时的出售列表
             getLoginSellList(refresh=false){
-                this.$http.get('js/hOtcListTransaction/getOtcListByType', {
-                    userId:this.userinfo?this.userId:null,
-                    type:2,
-                    pageNo:this.pageNo,
-                    pageSize:this.pageSize
+                this.$http.get('app/otcList/getOtcList', {
+                    userId: this.userinfo ? this.userId : null,
+                    type: 2,
+                    pageNo: this.pageNo,
+                    pageSize: this.pageSize
                 }).then((res) => {
                     console.log(res)
-                    if( res.success ){
-                        if( refresh ){
-                            this.sellList = res.result
+                    if (res.returnCode) {
+                        if (refresh) {
+                            this.sellList = res.resultData
                         } else {
-                            this.sellList.push(...res.result)
+                            this.sellList.push(...res.resultData)
                         }
 
                         this.$refs.scrollView.finishRefresh()

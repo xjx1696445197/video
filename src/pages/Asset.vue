@@ -16,7 +16,7 @@
 <!--                 @click="iosVideo"-->
 
                 <div class="index_button_icon fl"></div>
-                <p class="fl">苹果调试中</p>
+                <p @click="cart" class="fl">苹果调试中</p>
             </div>
         </div>
 
@@ -93,16 +93,21 @@
             }
         },
         methods: {
-            ...mapActions(['setUserNoticeState', 'setNeedUpdate','setUserinfo','setUsers','removeUserinfo','setSidebars']),
-            ...mapGetters(['getUserinfo', 'getSystemNotice', 'getTransferNotice', 'getNeedUpdate', 'getUpdateDetail','getSidebars']),
+            ...mapActions(['setUserNoticeState', 'setNeedUpdate', 'setUserinfo', 'setUsers', 'removeUserinfo', 'setSidebars']),
+            ...mapGetters(['getUserinfo', 'getSystemNotice', 'getTransferNotice', 'getNeedUpdate', 'getUpdateDetail', 'getSidebars']),
             // 创建版本更新弹窗
-            createUpdateDialog(){
+            cart() {
+                this.$push({
+                    path: '/cart'
+                })
+            },
+            createUpdateDialog() {
                 const h = this.$createElement
-                const cons = this.updateDetail.content.replace(/(\r\n)|(\n)/g,'<br/>');
+                const cons = this.updateDetail.content.replace(/(\r\n)|(\n)/g, '<br/>');
                 console.log(cons)
                 const content = h('div', {
                     class: 'DIALOG'
-                },[
+                }, [
                     h('div', {class: 'DIALOG_TITLE'}, this.updateDetail.editionNum + this.$t('aboutUs.aboutUs_edition')),
                     h('div', {class: 'DIALOG_CONTENT'}, this.updateDetail.content),
                     h('div', {class: 'DIALOG_BTNS clearfix'}, [

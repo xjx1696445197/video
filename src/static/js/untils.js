@@ -96,5 +96,6 @@ export {
     tofixed4,
     addressFormat,
     idCardFormat,
-    telFormat
+    telFormat,
+    tofixed2
 }

@@ -7,10 +7,10 @@
         </ul>
             <p>
                 <span>
-                    {{$t('otc_order.purchase')}}：{{data.haleBuy | tofixed2}} HALE
+                    {{$t('otc_order.purchase')}}：{{data.haleBuy | tofixed2}} CHMC
                 </span>
                 <span>
-                    {{$t('otc_order.sell')}}：{{data.spendHale | tofixed2}} HALE
+                    {{$t('otc_order.sell')}}：{{data.spendHale | tofixed2}} CHMC
                 </span>
             </p>
             <p>
@@ -57,7 +57,7 @@
                     {{$t('otc_order.purchasequantity')}}
                 </span>
                                 <span class="bold">
-                    {{list.allAmount}}  HALE
+                    {{list.allAmount}}  CHMC
                 </span>
                             </div>
                         </div>
@@ -120,7 +120,7 @@
                     {{$t('otc_order.purchasequantity')}}
                 </span>
                                 <span class="bold">
-                    {{list.sellNum}}  HALE
+                    {{list.sellNum}}  CHMC
                 </span>
                             </div>
                         </div>
@@ -214,13 +214,14 @@
         name: "Order",
         data () {
             return {
-                cur:0,
-                userId:JSON.parse(localStorage.getItem('userinfo')).userId,
-                datalist:[],
-                data:"",
-                curPage:1,
-                loadTag:true,
-                loadTxt:"更多加载中..."
+                cur: 0,
+                userId: JSON.parse(localStorage.getItem('userinfo')).customerId,
+                customerToken: JSON.parse(localStorage.getItem('userinfo')).customerToken,
+                datalist: [],
+                data: "",
+                curPage: 1,
+                loadTag: true,
+                loadTxt: "更多加载中..."
             }
         },
         methods:{
@@ -234,23 +235,24 @@
             doQuery: function () {
                 var that=this;
                 this.loadTag=false;
-                this.$http.get('js/hOtcTransaction/findOtcOrder', {
-                    userId:that.userId,
-                    type: that.cur+1,
+                this.$http.get('app/otcTransaction/findOtcOrder', {
+                    userId: that.userId,
+                    type: that.cur + 1,
                     pageNo: that.curPage,
-                    pageSize: 5
+                    pageSize: 5,
+                    customerToken: that.customerToken
                 }).then((data) => {
-                    that.data=data.result
+                    that.data = data.resultData
                     that.curPage++
-                    if (data.result.otcOrder==''){
-                        that.loadTxt="全部已加载"
-                        that.loadTag=false;
+                    if (data.resultData.otcOrder == '') {
+                        that.loadTxt = "全部已加载"
+                        that.loadTag = false;
                     } else {
                         var allProducts = [];
-                        allProducts = allProducts.concat(that.datalist, data.result.otcOrder);
+                        allProducts = allProducts.concat(that.datalist, data.resultData.otcOrder);
                         that.datalist = allProducts;
-                        that.loadTag=true;
-                        that.loadTxt="全部已加载"
+                        that.loadTag = true;
+                        that.loadTxt = "全部已加载"
                     }
 
                 })

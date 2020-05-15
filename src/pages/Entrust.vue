@@ -1,8 +1,8 @@
 <template>
     <div class="page">
         <p class="total">
-            <span>{{$t('otc_entrust.purchase')}}：{{param.buyHaleNum|numFilter}}HALE</span>
-            <span>{{$t('otc_entrust.sell')}}：{{param.sellHaleNum|numFilter}}HALE</span>
+            <span>{{$t('otc_entrust.purchase')}}：{{param.buyHaleNum|numFilter}}CHMC</span>
+            <span>{{$t('otc_entrust.sell')}}：{{param.sellHaleNum|numFilter}}CHMC</span>
         </p>
         <div class="entrustbutton">
                 <div  @click="commission">
@@ -43,7 +43,7 @@
                     {{$t('otc_entrust.purchasequantity')}}
                 </span>
                         <span class="bold">
-                    {{list.sellNum}}  HALE
+                    {{list.sellNum}}  CHMC
                 </span>
                     </div>
                 </div>
@@ -205,20 +205,21 @@
         },
         data(){
             return {
-                judge:'',
-                mbjudge:false,
-                mbjudgetw:false,
-                userId:JSON.parse(localStorage.getItem('userinfo')).userId,
-                data:{result:[]},
-                chaseid:"",
-                passwordDigVisible:false,
-                passwordDigClose:false,
-                password:"",
+                judge: '',
+                mbjudge: false,
+                mbjudgetw: false,
+                userId: JSON.parse(localStorage.getItem('userinfo')).customerId,
+                customerToken: JSON.parse(localStorage.getItem('userinfo')).customerToken,
+                data: {result: []},
+                chaseid: "",
+                passwordDigVisible: false,
+                passwordDigClose: false,
+                password: "",
                 tipsVisible: false,
                 tips: '',
-                index:'',
-                curPage:1,
-                loadTag:true,
+                index: '',
+                curPage: 1,
+                loadTag: true,
                 loadTxt:"更多加载中...",
                 param:'',
                 isCheckPassword:true
@@ -268,21 +269,22 @@
             },
             doQuery: function () {
                 var that=this;
-                this.$http.get('/js/hOtcTransaction/findEntrustmentOrder', {
-                    userId:that.userId,
+                this.$http.get('app/otcTransaction/findEntrustmentOrder', {
+                    userId: that.userId,
                     pageNo: that.curPage,
-                    pageSize:5
-                }).then((data) => {
-                    if (data.result==''){
-                        that.loadTxt="全部已加载"
-                        that.loadTag=false;
+                    pageSize: 5,
+                    customerToken: that.customerToken
+                }).then((datas) => {
+                    if (datas.resultData == "") {
+                        that.loadTxt = "全部已加载"
+                        that.loadTag = false;
                     } else {
                         that.curPage++
                         var allProducts = [];
-                        allProducts = allProducts.concat(that.data.result, data.result);
+                        allProducts = allProducts.concat(that.data.result, datas.resultData);
                         that.data.result = allProducts;
-                        that.loadTag=true;
-                        that.loadTxt="全部已加载"
+                        that.loadTag = true;
+                        that.loadTxt = "全部已加载"
                     }
 
                 })
@@ -305,10 +307,10 @@
             checkPassword(){
                 this.passwordDigVisible=false;
                 var that=this;
-                this.$http.post('/js/hOtcTransaction/revokeOrder', {
-                    id:that.chaseid,
-                    userId:that.userId,
-                    transPass:that.password
+                this.$http.post('app/otcTransaction/revokeOrder', {
+                    id: that.chaseid,
+                    userId: 4,
+                    transPass: that.password
                 }).then((res) => {
                     if(res.success){
                         that.showTips(res.message)
@@ -360,10 +362,10 @@
             // }).then((res) => {
             //     that.data=res
             // })
-            this.$http.get('/js/hOtcListTransaction/getStaticParam', {
-                userId:that.userId,
+            this.$http.get('app/otcList/getStaticParam', {
+                userId: that.userId,
             }).then((res) => {
-                that.param=res.result;
+                that.param = res.resultData;
             })
         }
 

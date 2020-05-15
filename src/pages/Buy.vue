@@ -2,7 +2,7 @@
     <div class="page">
         <div class="content">
             <div class="content_title clearfix">
-                <p class="buy_txt1 fl fweight">{{$t('otc_buy.available')}}{{available_Hale | tofixed2}}HALE</p>
+                <p class="buy_txt1 fl fweight">{{$t('otc_buy.available')}}{{available_Hale | tofixed2}}CHMC</p>
                 <p class="buy_txt1 fr fweight">{{$t('otc_buy.available')}}{{available_Usdt | tofixed2}}USDT</p>
             </div>
             <div class="main">
@@ -49,14 +49,15 @@
                                 </div>
                                 <div class="buy_item_bottom clearfix">
                                     <div class="buy_bottom_left fl">
-                                        <p class="buy_txt4">{{$t('otc_buy.num')}} {{item.sellNum | tofixed2}}  HALE</p>
+                                        <p class="buy_txt4">{{$t('otc_buy.num')}} {{item.sellNum | tofixed2}} CHMC</p>
                                         <p class="buy_txt4">{{$t('otc_buy.quota')}} {{item.singleMin}}-{{item.singleMax}}  USDT</p>
                                     </div>
                                     <div class="buy_bottom_btn fr"
                                          @click="toBuyHale"
                                          :data-id="item.orderId"
                                          :data-price="item.amount"
-                                    >{{$t('otc_buy.purchase')}} HALE</div>
+                                    >{{$t('otc_buy.purchase')}} CHMC
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -145,13 +146,13 @@
                 // }
             },
             // 获取可用余额
-            getAvailableAmount(){
-                this.$http.get('js/hOtcListTransaction/getStaticParam', {
-                    userId:this.userinfo?this.userId:null,
+            getAvailableAmount() {
+                this.$http.get('app/otcList/getStaticParam', {
+                    userId: 3,
                 }).then((res) => {
                     console.log(res)
-                    if( res.success ){
-                        if(this.userinfo){
+                    if (res.success) {
+                        if (this.userinfo) {
                             this.available_Hale = res.result.haleAmount
                             this.available_Usdt = res.result.usdtAmount
                         }
@@ -159,19 +160,19 @@
                 })
             },
             // 获取登录时的购买列表
-            getLoginBuyList(refresh=false){
-                this.$http.get('js/hOtcListTransaction/getOtcListByType', {
-                    userId:this.userinfo?this.userId:null,
-                    type:1,
-                    pageNo:this.pageNo,
-                    pageSize:this.pageSize
+            getLoginBuyList(refresh=false) {
+                this.$http.get('app/otcList/getOtcList', {
+                    userId: 3,
+                    type: 1,
+                    pageNo: this.pageNo,
+                    pageSize: this.pageSize
                 }).then((res) => {
                     console.log(res)
-                    if( res.success ){
-                        if( refresh ){
-                            this.buyList = res.result
+                    if (res.returnCode) {
+                        if (refresh) {
+                            this.buyList = res.resultData
                         } else {
-                            this.buyList.push(...res.result)
+                            this.buyList.push(...res.resultData)
                         }
 
                         this.$refs.scrollView.finishRefresh()
