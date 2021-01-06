@@ -42,7 +42,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.6.0",
     "@babel/runtime": "^7.5.5",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "clipboard": "^2.0.6",
     "easemob-websdk": "^3.0.6",
     "echarts": "^4.7.0",
